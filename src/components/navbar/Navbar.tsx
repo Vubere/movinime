@@ -3,9 +3,9 @@
 export default function Navbar(){
   return (
     <header>
-      <div aria-label="h1" className="heading">MOVIE APP</div>
+      <div aria-label="h1" className="heading">MOVIE</div>
       <div aria-label="h1"
-       className="heading anime">ANIME APP</div>
+       className="heading anime">ANIME</div>
     </header>
   )
 }
