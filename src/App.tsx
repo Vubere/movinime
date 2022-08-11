@@ -1,0 +1,14 @@
+import React from 'react';
+
+import './stylesheets/App.scss';
+import Navbar from './components/navbar/Navbar';
+
+function App() {
+  return (
+    <div className="App">
+      <Navbar/>
+    </div>
+  );
+}
+
+export default App;
