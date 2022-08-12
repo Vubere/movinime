@@ -8,14 +8,15 @@ export default function MoviePoster({
   status,
   poster_path,
 }:StateT){
+  const snippet = overview.slice(0, 130)
   return(
     <div className="moviePoster">
       <h3>{title}</h3>
       <img alt={`${title} movie poster`} 
-      src={poster_path}/>
+      src={`https://image.tmdb.org/t/p/w200${poster_path}`}/>
       <div>
         <h4>Overview:</h4>
-        <p>{overview}</p>
+        <p>{snippet+' ...'}</p>
         <ul>
           <li>
             Status: {status}

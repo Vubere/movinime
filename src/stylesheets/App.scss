@@ -11,3 +11,10 @@ body{
   display: flex;
   flex-direction: column;
 }
+.moviePoster{
+  width: 150px;
+  overflow: hidden;
+  img{
+    width: 120px;
+  }
+}
