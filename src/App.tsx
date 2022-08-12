@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, FC, useState } from 'react';
 
 import './stylesheets/App.scss';
 import Navbar from './components/navbar/Navbar';
@@ -10,9 +10,17 @@ async function fetchMovie(setState:(value:any)=>void) {
   setState(res)
   console.log(res)
 }
+export type StateT = {
+  title: string;
+  overview: string;
+  spoken_language: string[];
+  release_date:  string;
+  status: string;
+  poster_path: string;
+}
 
-function App() {
-  const [state, setState] = useState<any>({} as any)
+const App:FC = () => {
+  const [state, setState] = useState<StateT>({} as StateT)
   
   const memoized = useCallback( 
     () => {

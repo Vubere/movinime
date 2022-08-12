@@ -1,6 +1,4 @@
-type P = {
-  [key: string]: string;
-} 
+import { StateT } from "../../App"
 
 export default function MoviePoster({
   title,
@@ -9,7 +7,7 @@ export default function MoviePoster({
   release_date,
   status,
   poster_path,
-}:P){
+}:StateT){
   return(
     <div className="moviePoster">
       <h3>{title}</h3>
@@ -26,7 +24,9 @@ export default function MoviePoster({
           Release date: {release_date}
           </li>
           <li>
-            Languages: {spoken_language}
+            Languages: {/* spoken_language.map((i)=>{
+               return <div>{i}</div>
+            }) */}
           </li>
           <li>
             Production Companies: {}
