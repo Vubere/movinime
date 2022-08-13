@@ -16,8 +16,8 @@ const Section:FC<PropType> = ({Title, className, datas}) =>{
       <h2>{Title}</h2>
       <Filter/>
       <div className="container">
-        {datas.map((data)=>{
-          return <MoviePoster {...data}/>
+        {datas.map((data, i)=>{
+          return <MoviePoster key={i} {...data}/>
           })} 
       </div>
     </div>

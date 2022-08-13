@@ -32,9 +32,6 @@ const App: FC = () => {
   return (
     <div className="App">
       <Navbar />
-      {done &&
-        <MoviePoster {...state} />
-      }
       <main>
         <Jumbotron />
         <TopNewlyReleasedSection />
