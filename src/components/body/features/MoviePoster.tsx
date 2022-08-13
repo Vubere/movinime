@@ -1,4 +1,4 @@
-import { StateT } from "../../App"
+import { StateT } from "../../../Type"
 
 export default function MoviePoster({
   title,
@@ -14,7 +14,7 @@ export default function MoviePoster({
       <h3>{title}</h3>
       <img alt={`${title} movie poster`} 
       src={`https://image.tmdb.org/t/p/w200${poster_path}`}/>
-      <div>
+      <div className="movieDesc">
         <h4>Overview:</h4>
         <p>{snippet+' ...'}</p>
         <ul>
