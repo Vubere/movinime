@@ -1,5 +1,5 @@
 
-import MoviePoster from './MoviePoster'
+import MoviePoster from './Poster'
 import {StateT} from '../../../Type'
 import { FC } from 'react';
 import Filter from '../filter/Filter';

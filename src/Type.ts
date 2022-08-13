@@ -1,3 +1,5 @@
+
+
 export type StateT = {
   title: string;
   overview: string;
@@ -6,3 +8,4 @@ export type StateT = {
   status: string;
   poster_path: string;
 }
+export  type Site = 'movie'|'anime'

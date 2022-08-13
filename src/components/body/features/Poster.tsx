@@ -1,6 +1,6 @@
 import { StateT } from "../../../Type"
 
-export default function MoviePoster({
+export default function Poster({
   title,
   overview,
   spoken_language,
@@ -10,11 +10,11 @@ export default function MoviePoster({
 }:StateT){
   const snippet = overview.slice(0, 130)
   return(
-    <div className="moviePoster">
+    <div className="poster">
       <h3>{title}</h3>
-      <img alt={`${title} movie poster`} 
+      <img alt={`${title} poster`} 
       src={`https://image.tmdb.org/t/p/w200${poster_path}`}/>
-      <div className="movieDesc">
+      <div className="description">
         <h4>Overview:</h4>
         <p>{snippet+' ...'}</p>
         <ul>

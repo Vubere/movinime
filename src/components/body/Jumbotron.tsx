@@ -1,4 +1,4 @@
-import MoviePoster from "./features/MoviePoster"
+import MoviePoster from "./features/Poster"
 import data from "./FakeData"
 import { FC } from "react"
 

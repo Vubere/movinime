@@ -1,8 +1,8 @@
 import React, { useEffect, FC, useState } from 'react';
-import { StateT } from './Type';
+import { Site, StateT } from './Type';
 import './stylesheets/App.scss';
 import Navbar from './components/navbar/Navbar';
-import MoviePoster from './components/body/features/MoviePoster'
+import MoviePoster from './components/body/features/Poster'
 import TopPopularMovie from './components/body/TopPopularMovies';
 import TopNewlyReleasedSection from './components/body/TopNewlyReleased';
 import TopRatedSection from './components/body/TopRatedSection';
@@ -19,6 +19,7 @@ async function fetchMovie(setState: (value: any) => void) {
 
 const App: FC = () => {
   const [state, setState] = useState<StateT>({} as StateT)
+  const [site, setSite] = useState<Site>('movie')
   const [done, setDone] = useState<boolean>(false)
 
   useEffect(

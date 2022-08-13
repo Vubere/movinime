@@ -12,7 +12,6 @@ body{
   overflow: auto;
   overflow-x: hidden;
   height: 100vh;
-  scroll-behavior: smooth;
   width: 100vw;
   flex-direction: column;
 }
@@ -63,7 +62,7 @@ main{
       width: 100%;
       display: flex;
       overflow: auto;
-      .moviePoster{
+      .poster{
         min-width: 20%;
         margin: 5px;
         border: 1px solid white;
@@ -71,7 +70,7 @@ main{
     }
   }
 }
-.moviePoster{
+.poster{
   width: 150px;
   overflow: hidden;
   img{
