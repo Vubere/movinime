@@ -3,7 +3,7 @@ import { StateT } from "../../../Type"
 export default function Poster({
   title,
   overview,
-  spoken_language,
+  original_language,
   release_date,
   status,
   poster_path,
@@ -11,9 +11,9 @@ export default function Poster({
   const snippet = overview.slice(0, 130)
   return(
     <div className="poster">
+      <img alt={`${title} imgposter`} 
+      src={`https://image.tmdb.org/t/p/w300${poster_path}`}/>
       <h3>{title}</h3>
-      <img alt={`${title} poster`} 
-      src={`https://image.tmdb.org/t/p/w200${poster_path}`}/>
       <div className="description">
         <h4>Overview:</h4>
         <p>{snippet+' ...'}</p>
@@ -25,9 +25,7 @@ export default function Poster({
           Release date: {release_date}
           </li>
           <li>
-            Languages: {/* spoken_language.map((i)=>{
-               return <div>{i}</div>
-            }) */}
+            Language: {original_language}
           </li>
           <li>
             Production Companies: {}
