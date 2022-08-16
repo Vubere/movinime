@@ -3,7 +3,6 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import { act } from "react-dom/test-utils";
 import { Api_key } from "../../../app/apikey";
 import { StateT } from "../../../Type";
 
@@ -124,6 +123,6 @@ const movieSlice = createSlice({
       });
   },
 });
-const g = movieAdapter.getSelectors();
+//const g = movieAdapter.getSelectors();
 export default movieSlice.reducer;
 export const { addMovieList } = movieSlice.actions;

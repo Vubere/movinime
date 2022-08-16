@@ -1,4 +1,3 @@
-import MoviePoster from "./features/Poster"
 import { FC } from "react"
 
 const Jumbotron:FC = () => {
