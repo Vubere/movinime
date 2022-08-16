@@ -7,6 +7,7 @@ const TopNewlyReleasedSection: FC = () => {
   const dispatch = useAppDispatch()
   const status = useAppSelector(state => state.movie.latest.status)
   const data = useAppSelector(state => state.movie.entities.latest)
+  console.log(data)
   useEffect(
     () => {
       if (status === 'idle')
@@ -14,7 +15,11 @@ const TopNewlyReleasedSection: FC = () => {
     }, [status, dispatch]
   )
   return (
-    <Section Title='New' className="section section1" datas={data} />
+    <>
+      {status === 'loading' ? <div>loading</div> :
+        <Section Title='New' className="section section1" datas={data} />
+      }
+    </>
   )
 }
 

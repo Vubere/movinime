@@ -79,7 +79,6 @@ const movieSlice = createSlice({
       })
       .addCase(fetchTopRatedMovie.fulfilled, (state, action) => {
         state.topRated.status = "succeeded";
-        /*  movieAdapter.setAll(state,action.payload) */
         state.entities.topRated = action.payload;
       })
       .addCase(fetchTopRatedMovie.rejected, (state, action) => {
@@ -102,8 +101,8 @@ const movieSlice = createSlice({
       })
       .addCase(fetchLatestMovie.fulfilled, (state, action) => {
         state.entities.latest = action.payload;
-        state.latest.status = "succeeded";
         console.log(action.payload)
+        state.latest.status = "succeeded";
       })
       .addCase(fetchLatestMovie.rejected, (state) => {
         state.latest.status = "failed";
@@ -115,14 +114,12 @@ const movieSlice = createSlice({
       .addCase(fetchUpcomingMovie.fulfilled, (state, action) => {
         state.entities.upcoming = action.payload;
         state.upcoming.status = "succeeded";
-        console.log(action.payload)
       })
       .addCase(fetchUpcomingMovie.rejected, (state,action) => {
         state.upcoming.status = "failed";
-        console.log(action.payload)
       });
   },
 });
-//const g = movieAdapter.getSelectors();
+
 export default movieSlice.reducer;
 export const { addMovieList } = movieSlice.actions;

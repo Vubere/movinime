@@ -66,10 +66,17 @@ main {
         margin: 5px;
         border: 1px solid white;
         h3 {
-          font-size: 1rem;
-        }
-        p {
           font-size: 0.8rem;
+        }
+        .description{
+          padding: 3px;
+          p, h4, ul li {
+            font-size: 0.7rem;
+          }
+        }
+        .bool{
+          color: red;
+          cursor: pointer;
         }
       }
     }

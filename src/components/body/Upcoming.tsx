@@ -10,7 +10,7 @@ const Upcoming: FC = () => {
   useEffect(
     () => {
       if (status === 'idle')
-        dispatch(fetchUpcomingMovie(2))
+        dispatch(fetchUpcomingMovie(1))
     }, [dispatch, status]
   )
   return (
