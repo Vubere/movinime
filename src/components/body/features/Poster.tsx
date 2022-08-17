@@ -10,7 +10,7 @@ export default function Poster({
   poster_path,
 }: StateT) {
   const [open, setOpen] = useState<boolean>(false)
-  const snippet = overview.slice(0, 130)
+ // const snippet = overview.slice(0, 130)
   const descpElm = (<div className="description">
     <h4>Overview:</h4>
     <p>{overview}</p>

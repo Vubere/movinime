@@ -1,6 +1,5 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect} from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import Poster from "./features/Poster"
 import { fetchTopPopularMovie } from "./features/movieslice"
 
 const Jumbotron: FC = () => {

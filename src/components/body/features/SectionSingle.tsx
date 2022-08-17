@@ -1,6 +1,6 @@
 
 import MoviePoster from './Poster';
-import { FC, useCallback, useEffect, useRef, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { fetchTopRatedMovie, fetchUpcomingMovie, fetchLatestMovie, fetchTopPopularMovie } from './movieslice';
 
@@ -12,7 +12,7 @@ import { fetchTopRatedMovie, fetchUpcomingMovie, fetchLatestMovie, fetchTopPopul
 const SectionSingle: FC = () => {
   const dispatch = useAppDispatch()
   const movie = useAppSelector(state => state.movie)
-  const movied = useAppSelector(state => state.movie.entities)
+  //const movied = useAppSelector(state => state.movie.entities)
  
   const [obj, setObj] = useState<any>({
     status:'idle',
@@ -21,27 +21,27 @@ const SectionSingle: FC = () => {
   let data = useRef<any>()
 
 
-  const toggle: (arg: string, arg2:string) => void = (name, status) => {
-    if (name === 'popular') {
-      setObj({...obj, status:movie.topPopular.status})
-      data.current = movie.entities.topPopular
-    } else if (name === 'rated') {
-      setObj({
-        ...obj, status: movie.topRated.status})
-      data.current = movie.entities.topRated
-    } else if (name === 'new') {
-      setObj({
-        ...obj, status: movie.latest.status})
-      data.current = movie.entities.latest
-    } else if (name === 'upcoming') {
-      setObj({
-        ...obj, status: movie.upcoming.status})
-      data.current = movie.entities.upcoming
-    }
-    console.log(data.current, status)
-  }
   useEffect(
     () => {
+      const toggle: (arg: string, arg2:string) => void = (name, status) => {
+        if (name === 'popular') {
+          setObj({...obj, status:movie.topPopular.status})
+          data.current = movie.entities.topPopular
+        } else if (name === 'rated') {
+          setObj({
+            ...obj, status: movie.topRated.status})
+          data.current = movie.entities.topRated
+        } else if (name === 'new') {
+          setObj({
+            ...obj, status: movie.latest.status})
+          data.current = movie.entities.latest
+        } else if (name === 'upcoming') {
+          setObj({
+            ...obj, status: movie.upcoming.status})
+          data.current = movie.entities.upcoming
+        }
+        console.log(data.current, status)
+      }
       if (obj.status === 'idle') {
         obj.name === 'popular' ?
         dispatch(fetchTopPopularMovie(1)) :
@@ -52,7 +52,7 @@ const SectionSingle: FC = () => {
         dispatch(fetchUpcomingMovie(1));
       }
       toggle(obj.name, obj.status)
-    }, [obj.name, obj.status, dispatch]
+    }, [obj, dispatch, movie]
   )
 
   let arr = []
