@@ -26,11 +26,11 @@ export const fetchTopPopularMovie = createAsyncThunk<StateT[], number>(
     return res.results;
   }
 );
-export const fetchLatestMovie = createAsyncThunk<StateT[]>(
+export const fetchLatestMovie = createAsyncThunk<StateT[], number>(
   "movie/fetchLatest",
-  async () => {
+  async (page=1) => {
     const api = await fetch(
-      `https://api.themoviedb.org/3/movie/latest?api_key=${Api_key}&language=en-US`
+      `https://api.themoviedb.org/3/movie/now_playing?api_key=${Api_key}&language=en-US&page=${page}`
     );
     const res = await api.json();
     return res.results;
@@ -101,7 +101,6 @@ const movieSlice = createSlice({
       })
       .addCase(fetchLatestMovie.fulfilled, (state, action) => {
         state.entities.latest = action.payload;
-        console.log(action.payload)
         state.latest.status = "succeeded";
       })
       .addCase(fetchLatestMovie.rejected, (state) => {
@@ -115,7 +114,7 @@ const movieSlice = createSlice({
         state.entities.upcoming = action.payload;
         state.upcoming.status = "succeeded";
       })
-      .addCase(fetchUpcomingMovie.rejected, (state,action) => {
+      .addCase(fetchUpcomingMovie.rejected, (state) => {
         state.upcoming.status = "failed";
       });
   },

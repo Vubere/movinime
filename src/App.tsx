@@ -7,6 +7,7 @@ import TopRatedSection from './components/body/TopRatedSection';
 import Upcoming from './components/body/Upcoming';
 import Jumbotron from './components/body/Jumbotron';
 import Footer from './components/footer/Footer';
+import SectionSingle from './components/body/features/SectionSingle';
 
 
 const App: FC = () => {
@@ -16,10 +17,11 @@ const App: FC = () => {
       <Navbar />
       <main>
         <Jumbotron />
-        <TopNewlyReleasedSection />
+        <SectionSingle/>
+        {/* <TopNewlyReleasedSection />
         <TopPopularMovie />
         <TopRatedSection />
-        <Upcoming />
+        <Upcoming /> */}
       </main>
       <Footer />
     </div>

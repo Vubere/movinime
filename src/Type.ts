@@ -1,3 +1,4 @@
+import { NoSubstitutionTemplateLiteral } from "typescript";
 
 
 export type StateT = {
@@ -8,5 +9,6 @@ export type StateT = {
   status: string;
   poster_path: string;
   popularity: number;
+  width: NoSubstitutionTemplateLiteral
 }
 export  type Site = 'movie'|'anime'

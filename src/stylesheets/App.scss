@@ -15,15 +15,67 @@ body {
   width: 100vw;
   flex-direction: column;
 }
+@keyframes jumbomotion{
+  0%{
+    bottom: 0;
+  }
+  40%{
+    bottom: -30%
+  }
+  
+  45%{
+    bottom: -50%;
+  }
+  50%{
+    bottom: -100%;
+  }
+  60%{
+    bottom: -50%;
+  }
+  80%{
+    bottom: -30%;
+  }
+  100%{
+    bottom: 0;
+  }
+}
 main {
   height: 80%;
   .jumbotron {
     padding: 5px;
     width: 100vw;
+    position: relative;
     overflow: hidden;
     height: 40vh;
     border: 2px solid rgba(223, 202, 202, 0.274);
+    .poster{
+      width:100%;
+      height: 100%;
+      position: relative;
+      h3{
+        font-size: 2.5rem;
+      }
+      img{
+        width: 100%;
+        transition: 3s;
+        position: absolute;
+        bottom: 0%;
+        animation: jumbomotion 8s linear;
+        animation-iteration-count: infinite;
+      }
+      .open{
+        z-index: 8;
+        position: absolute;
+        top: 40px;
+        left: 0;
+        .description{
+          width: 50vw;
+          
+        }
+      }
+    }
   }
+
   .section {
     border: 1px solid white;
     padding: 10px;
@@ -64,6 +116,7 @@ main {
       .poster {
         min-width: 120px;
         margin: 5px;
+        transition: 3s;
         border: 1px solid white;
         h3 {
           font-size: 0.8rem;
@@ -96,4 +149,20 @@ footer {
   padding: 5px;
   display: flex;
   justify-content: center;
+}
+.scale{
+  position: absolute;
+  transform: scale(80vh);
+  transition: 3s;
+  z-index: 10;
+}
+.single{
+  ul{
+    li{
+      text-decoration: none;
+      display: inline-block;
+      margin: 3px;
+      cursor: pointer;
+    }
+  }
 }

@@ -11,7 +11,7 @@ const TopNewlyReleasedSection: FC = () => {
   useEffect(
     () => {
       if (status === 'idle')
-        dispatch(fetchLatestMovie())
+        dispatch(fetchLatestMovie(1))
     }, [status, dispatch]
   )
   return (

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { StateT } from "../../../Type"
 
 export default function Poster({
@@ -13,7 +13,7 @@ export default function Poster({
   const snippet = overview.slice(0, 130)
   const descpElm = (<div className="description">
     <h4>Overview:</h4>
-    <p>{snippet + '...'}</p>
+    <p>{overview}</p>
     <ul>
       <li>
         Status: {status}
@@ -29,15 +29,23 @@ export default function Poster({
       </li>
     </ul>
   </div>)
+  const clickedPoster = useRef<any>()
 
   return (
-    <div className="poster">
+    <div className="poster" ref={clickedPoster} onClick={()=>{
+      clickedPoster.current.classList.toggle('scale')
+    }}
+    onMouseLeave={()=>{
+      clickedPoster.current.classList.remove('scale')
+    }}>
       <img alt={`${title} imgposter`}
         src={`https://image.tmdb.org/t/p/w300${poster_path}`} />
       <h3>{title}</h3>
+      <div className="open">
       {!open && <div className="bool" onClick={() => setOpen(!open)}>see details...</div>}
-      {open && descpElm}
-      {open&&<div className="bool" onClick={()=>setOpen(!open)}>...close</div>}
+        {open && descpElm}
+        {open && <div className="bool" onClick={() => setOpen(!open)}>...close</div>}
+      </div>
     </div>
   )
 }
