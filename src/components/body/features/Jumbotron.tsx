@@ -1,6 +1,6 @@
 import { FC, useEffect} from "react"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { fetchTopPopularMovie } from "./features/movieslice"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { fetchTopPopularMovie } from "./movieslice"
 
 const Jumbotron: FC = () => {
   const dispatch = useAppDispatch()

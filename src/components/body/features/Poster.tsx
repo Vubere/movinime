@@ -10,7 +10,6 @@ export default function Poster({
   poster_path,
 }: StateT) {
   const [open, setOpen] = useState<boolean>(false)
- // const snippet = overview.slice(0, 130)
   const descpElm = (<div className="description">
     <h4>Overview:</h4>
     <p>{overview}</p>
@@ -34,9 +33,6 @@ export default function Poster({
   return (
     <div className="poster" ref={clickedPoster} onClick={()=>{
       clickedPoster.current.classList.toggle('scale')
-    }}
-    onMouseLeave={()=>{
-      clickedPoster.current.classList.remove('scale')
     }}>
       <img alt={`${title} imgposter`}
         src={`https://image.tmdb.org/t/p/w300${poster_path}`} />
