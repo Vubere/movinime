@@ -31,16 +31,12 @@ export default function Poster({
   const clickedPoster = useRef<any>()
 
   return (
-    <div className="poster" ref={clickedPoster} onClick={()=>{
-      clickedPoster.current.classList.toggle('scale')
-    }}>
+    <div className="poster" ref={clickedPoster} >
       <img alt={`${title} imgposter`}
         src={`https://image.tmdb.org/t/p/w300${poster_path}`} />
       <h3>{title}</h3>
       <div className="open">
-      {!open && <div className="bool" onClick={() => setOpen(!open)}>see details...</div>}
-        {open && descpElm}
-        {open && <div className="bool" onClick={() => setOpen(!open)}>...close</div>}
+       i
       </div>
     </div>
   )

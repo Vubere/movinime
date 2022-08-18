@@ -13,48 +13,53 @@ const SectionSingle: FC = () => {
   const dispatch = useAppDispatch()
   const movie = useAppSelector(state => state.movie)
   //const movied = useAppSelector(state => state.movie.entities)
- 
+
   const [obj, setObj] = useState<any>({
-    status:'idle',
+    status: 'idle',
     name: 'new'
   })
+  const [showMore, setShowMore] = useState<boolean>(false)
   let data = useRef<any>()
-
+  let [pageNum, setPageNum] = useState<number>(1)
 
   useEffect(
     () => {
-      const toggle: (arg: string, arg2:string) => void = (name, status) => {
+      const toggle: (arg: string, arg2: string) => void = (name, status) => {
         if (name === 'popular') {
-          setObj({...obj, status:movie.topPopular.status})
+          setObj({ ...obj, status: movie.topPopular.status })
           data.current = movie.entities.topPopular
         } else if (name === 'rated') {
           setObj({
-            ...obj, status: movie.topRated.status})
+            ...obj, status: movie.topRated.status
+          })
           data.current = movie.entities.topRated
         } else if (name === 'new') {
           setObj({
-            ...obj, status: movie.latest.status})
+            ...obj, status: movie.latest.status
+          })
           data.current = movie.entities.latest
         } else if (name === 'upcoming') {
           setObj({
-            ...obj, status: movie.upcoming.status})
+            ...obj, status: movie.upcoming.status
+          })
           data.current = movie.entities.upcoming
         }
         console.log(data.current, status)
       }
       if (obj.status === 'idle') {
         obj.name === 'popular' ?
-        dispatch(fetchTopPopularMovie(1)) :
-        obj.name === 'rated' ?
-        dispatch(fetchTopRatedMovie(1)) :
-        obj.name === 'new' ?
-        dispatch(fetchLatestMovie(1)) :
-        dispatch(fetchUpcomingMovie(1));
+          dispatch(fetchTopPopularMovie(pageNum)) :
+          obj.name === 'rated' ?
+            dispatch(fetchTopRatedMovie(pageNum)) :
+            obj.name === 'new' ?
+              dispatch(fetchLatestMovie(pageNum)) :
+              dispatch(fetchUpcomingMovie(pageNum));
       }
       toggle(obj.name, obj.status)
-    }, [obj, dispatch, movie]
+    }, [obj.name, obj.status, dispatch, movie, pageNum]
   )
 
+  let num = showMore ? 20 : 12;
   let arr = []
   for (let p in data.current) {
     arr.push(data.current[p])
@@ -64,11 +69,11 @@ const SectionSingle: FC = () => {
       <h2>
         <ul>
           <li onClick={() => {
-           setObj({...obj, name: 'new'}) 
+            setObj({ ...obj, name: 'new' })
           }
           }>New</li>|
           <li onClick={() => {
-            setObj({ ...obj, name: 'popular' }) 
+            setObj({ ...obj, name: 'popular' })
           }
           }>Popular</li>|
           <li onClick={() => setObj({ ...obj, name: 'rated' })}>Top Rated</li>|
@@ -76,9 +81,33 @@ const SectionSingle: FC = () => {
         </ul>
       </h2>
       <div className="container">
-        {arr.slice(0, 10).map((data, i) => {
-          return <MoviePoster key={i} {...data} />
-        })}
+        <div className="moviesContainer">
+          {arr.slice(0, num).map((data, i) => {
+            return <MoviePoster key={i} {...data} />
+          })}
+        </div>
+        {!showMore?'':
+        <div className="pagination">
+          <div>&lt; &lt;</div>
+          <div onClick={()=>{
+            setObj({...obj, status:'idle'})
+            setPageNum(1)}}>1</div>
+          <div onClick={()=>{
+            setObj({...obj, status:'idle'})
+            setPageNum(2)}}>2</ div>
+          <div onClick={()=>{
+            setObj({...obj, status:'idle'})
+            setPageNum(3)}}>3</ div>
+          <div onClick={()=>{
+            setObj({...obj, status:'idle'})
+            setPageNum(4)}}>4</div>
+          <div onClick={()=>{
+            setObj({...obj, status:'idle'})
+            setPageNum(5)}}>5</div>
+          <div>&gt; &gt;</div>
+        </div>}
+        <button className='showMoreBtn' style={{ color: 'black' }}
+          onClick={() => setShowMore(!showMore)}>{!showMore?'show more':'show less'}</button>
       </div>
     </div>
   )

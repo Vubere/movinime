@@ -6,34 +6,37 @@ const Jumbotron: FC = () => {
   const dispatch = useAppDispatch()
   const status = useAppSelector(state => state.movie.topPopular.status)
   const data: any = useAppSelector(state => state.movie.entities.topPopular)
+
   useEffect(
     () => {
       if (status === 'idle')
         dispatch(fetchTopPopularMovie(1))
     }, [status, dispatch]
   )
+
+  const randNum = Math.floor(Math.random()*20)
   return (
 
     <div className="jumbotron">
       {status !== 'succeeded' ? <div>loading</div> :
         <>
           <div className="poster">
-            <img alt={`${data[0].title} poster`}
-              src={`https://image.tmdb.org/t/p/w500${data[0].poster_path}`} />
+            <img alt={`${data[randNum].title} poster`}
+              src={`https://image.tmdb.org/t/p/w500${data[randNum].poster_path}`} />
             <div className="open">
-              <h3>{data[0].title}</h3>
+              <h3>{data[randNum].title}</h3>
               <div className="open">
                 <div className="description">
-                  <p>{data[0].overview}</p>
+                  <p>{data[randNum].overview}</p>
                   <ul>
                     <li>
-                      Status: {data[0].status}
+                      Status: {data[randNum].status}
                     </li>
                     <li>
-                      Release date: {data[0].release_date}
+                      Release date: {data[randNum].release_date}
                     </li>
                     <li>
-                      Language: {data[0].original_language}
+                      Language: {data[randNum].original_language}
                     </li>
                   </ul>
                 </div>

@@ -111,26 +111,59 @@ main {
     }
     .container {
       width: 100%;
+      position: relative;
       display: flex;
-      overflow: auto;
-      .poster {
-        min-width: 120px;
-        margin: 5px;
-        transition: 3s;
-        border: 1px solid white;
-        h3 {
-          font-size: 0.8rem;
-        }
-        .description{
-          padding: 3px;
-          p, h4, ul li {
-            font-size: 0.7rem;
+      flex-direction: column;
+      align-items: center;
+      .moviesContainer{
+        display: grid;
+        grid-template-columns: 24% 24% 24% 24%;
+        gap: 1%;
+        overflow: hidden;
+        .poster {
+          width: 100%;
+          margin: 5px;
+          transition: 3s;
+          border: none;
+          background-color: #ffffff22;
+          img{
+            width: 100%;
+            height: auto;
+          }
+          h3 {
+            font-size: 0.8rem;
+            padding: 4px;
+          }
+          .description{
+            padding: 3px;
+            p, h4, ul li {
+              font-size: 0.7rem;
+            }
+          }
+          .bool{
+            color: red;
+            cursor: pointer;
+          }
+          .open{
+            border-radius: 100%;
+            border: 1px solid white;
+            width: 18px;
+            text-align: center;
+            position: relative;
+            right: -50%;
+            transform: translate(-50%);
           }
         }
-        .bool{
-          color: red;
-          cursor: pointer;
-        }
+      }
+      .showMoreBtn{
+        display: block;
+        width: 90px
+      }
+      .pagination{
+        display: flex;
+        justify-content: space-between;
+        width: 150px;
+        cursor: pointer;
       }
     }
   }
