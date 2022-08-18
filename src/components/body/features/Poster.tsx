@@ -34,9 +34,11 @@ export default function Poster({
     <div className="poster" ref={clickedPoster} >
       <img alt={`${title} imgposter`}
         src={`https://image.tmdb.org/t/p/w300${poster_path}`} />
-      <h3>{title}</h3>
+      <div className="titleDiv">
+        <h3>{title.length>20?title.slice(0, 25)+'...':title}</h3>
+      </div>
       <div className="open">
-       i
+        i
       </div>
     </div>
   )
