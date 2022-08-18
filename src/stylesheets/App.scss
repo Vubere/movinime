@@ -17,27 +17,28 @@ body {
 }
 @keyframes jumbomotion{
   0%{
-    bottom: 0;
+    transform: translate(0, 0);
   }
   40%{
-    bottom: -30%
+     transform: translate(0, 20%);
   }
   
   45%{
-    bottom: -50%;
+     transform: translate(0, 30%);
   }
   50%{
-    bottom: -100%;
+     transform: translate(0, 40%);
   }
   60%{
-    bottom: -50%;
+    transform: translate(0, 30%);
   }
   80%{
-    bottom: -30%;
+     transform: translate(0, 20%);
   }
   100%{
-    bottom: 0;
+    transform: translate(0, 0%);
   }
+ 
 }
 main {
   height: 80%;
@@ -57,10 +58,10 @@ main {
       }
       img{
         width: 100%;
-        transition: 3s;
+        transition: 4s;
         position: absolute;
-        bottom: 0%;
-        animation: jumbomotion 8s linear;
+        bottom: 0;
+        animation: jumbomotion 6s linear;
         animation-iteration-count: infinite;
       }
       .open{
@@ -126,6 +127,7 @@ main {
           transition: 3s;
           border: none;
           background-color: #ffffff22;
+          position: relative;
           img{
             width: 100%;
             height: auto;
@@ -149,9 +151,11 @@ main {
             border: 1px solid white;
             width: 18px;
             text-align: center;
-            position: relative;
-            right: -50%;
-            transform: translate(-50%);
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            /* right: -50%;
+            transform: translate(-50%); */
           }
         }
       }

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { StateT } from "../../../Type"
 
 export default function Poster({
@@ -9,7 +9,7 @@ export default function Poster({
   status,
   poster_path,
 }: StateT) {
-  const [open, setOpen] = useState<boolean>(false)
+  /* const [open, setOpen] = useState<boolean>(false)
   const descpElm = (<div className="description">
     <h4>Overview:</h4>
     <p>{overview}</p>
@@ -27,7 +27,7 @@ export default function Poster({
         Production Companies: { }
       </li>
     </ul>
-  </div>)
+  </div>) */
   const clickedPoster = useRef<any>()
 
   return (

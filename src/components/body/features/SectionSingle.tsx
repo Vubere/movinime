@@ -6,7 +6,7 @@ import { fetchTopRatedMovie, fetchUpcomingMovie, fetchLatestMovie, fetchTopPopul
 
 
 
-
+type Tabtype = 'new' | 'popular' | 'rated' | 'upcoming'
 
 
 const SectionSingle: FC = () => {
@@ -14,6 +14,7 @@ const SectionSingle: FC = () => {
   const movie = useAppSelector(state => state.movie)
   //const movied = useAppSelector(state => state.movie.entities)
 
+  const [tab, setTab] = useState<Tabtype>('new')
   const [obj, setObj] = useState<any>({
     status: 'idle',
     name: 'new'
@@ -26,22 +27,16 @@ const SectionSingle: FC = () => {
     () => {
       const toggle: (arg: string, arg2: string) => void = (name, status) => {
         if (name === 'popular') {
-          setObj({ ...obj, status: movie.topPopular.status })
+          setObj((prevstate: typeof obj) => ({ ...prevstate, status: movie.topPopular.status }))
           data.current = movie.entities.topPopular
         } else if (name === 'rated') {
-          setObj({
-            ...obj, status: movie.topRated.status
-          })
+          setObj((prevstate: typeof obj) => ({ ...prevstate, status: movie.topRated.status }))
           data.current = movie.entities.topRated
         } else if (name === 'new') {
-          setObj({
-            ...obj, status: movie.latest.status
-          })
+          setObj((prevstate: typeof obj) => ({ ...prevstate, status: movie.latest.status }))
           data.current = movie.entities.latest
         } else if (name === 'upcoming') {
-          setObj({
-            ...obj, status: movie.upcoming.status
-          })
+          setObj((prevstate: typeof obj) => ({ ...prevstate, status: movie.upcoming.status }))
           data.current = movie.entities.upcoming
         }
         console.log(data.current, status)
@@ -58,7 +53,16 @@ const SectionSingle: FC = () => {
       toggle(obj.name, obj.status)
     }, [obj.name, obj.status, dispatch, movie, pageNum]
   )
-
+  const tabToggle = (name: Tabtype ) => {
+    if (tab === name) {
+      return
+    }
+    if (pageNum !== 1) {
+      setPageNum(1)
+    }
+    setTab(name)
+    setObj({ ...obj, name: name })
+  }
   let num = showMore ? 20 : 12;
   let arr = []
   for (let p in data.current) {
@@ -68,16 +72,11 @@ const SectionSingle: FC = () => {
     <div className='section single'>
       <h2>
         <ul>
-          <li onClick={() => {
-            setObj({ ...obj, name: 'new' })
-          }
+          <li onClick={() => tabToggle('new')
           }>New</li>|
-          <li onClick={() => {
-            setObj({ ...obj, name: 'popular' })
-          }
-          }>Popular</li>|
-          <li onClick={() => setObj({ ...obj, name: 'rated' })}>Top Rated</li>|
-          <li onClick={() => setObj({ ...obj, name: 'upcoming' })}>Upcoming</li>
+          <li onClick={() => tabToggle('popular')}>Popular</li>|
+          <li onClick={() => tabToggle('rated')}>Top Rated</li>|
+          <li onClick={() => tabToggle('upcoming')}>Upcoming</li>
         </ul>
       </h2>
       <div className="container">
@@ -86,28 +85,33 @@ const SectionSingle: FC = () => {
             return <MoviePoster key={i} {...data} />
           })}
         </div>
-        {!showMore?'':
-        <div className="pagination">
-          <div>&lt; &lt;</div>
-          <div onClick={()=>{
-            setObj({...obj, status:'idle'})
-            setPageNum(1)}}>1</div>
-          <div onClick={()=>{
-            setObj({...obj, status:'idle'})
-            setPageNum(2)}}>2</ div>
-          <div onClick={()=>{
-            setObj({...obj, status:'idle'})
-            setPageNum(3)}}>3</ div>
-          <div onClick={()=>{
-            setObj({...obj, status:'idle'})
-            setPageNum(4)}}>4</div>
-          <div onClick={()=>{
-            setObj({...obj, status:'idle'})
-            setPageNum(5)}}>5</div>
-          <div>&gt; &gt;</div>
-        </div>}
+        {!showMore ? '' :
+          <div className="pagination">
+            <div>&lt; &lt;</div>
+            <div onClick={() => {
+              setObj({ ...obj, status: 'idle' })
+              setPageNum(1)
+            }}>1</div>
+            <div onClick={() => {
+              setObj({ ...obj, status: 'idle' })
+              setPageNum(2)
+            }}>2</ div>
+            <div onClick={() => {
+              setObj({ ...obj, status: 'idle' })
+              setPageNum(3)
+            }}>3</ div>
+            <div onClick={() => {
+              setObj({ ...obj, status: 'idle' })
+              setPageNum(4)
+            }}>4</div>
+            <div onClick={() => {
+              setObj({ ...obj, status: 'idle' })
+              setPageNum(5)
+            }}>5</div>
+            <div>&gt; &gt;</div>
+          </div>}
         <button className='showMoreBtn' style={{ color: 'black' }}
-          onClick={() => setShowMore(!showMore)}>{!showMore?'show more':'show less'}</button>
+          onClick={() => setShowMore(!showMore)}>{!showMore ? 'show more' : 'show less'}</button>
       </div>
     </div>
   )
