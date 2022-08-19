@@ -1,5 +1,6 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { StateT } from "../../../Type"
+import MoviePage, { Modal } from "./MoviePage"
 
 export default function Poster({
   title,
@@ -9,37 +10,28 @@ export default function Poster({
   status,
   poster_path,
 }: StateT) {
-  /* const [open, setOpen] = useState<boolean>(false)
-  const descpElm = (<div className="description">
-    <h4>Overview:</h4>
-    <p>{overview}</p>
-    <ul>
-      <li>
-        Status: {status}
-      </li>
-      <li>
-        Release date: {release_date}
-      </li>
-      <li>
-        Language: {original_language}
-      </li>
-      <li>
-        Production Companies: { }
-      </li>
-    </ul>
-  </div>) */
+  const [modalOpen, setModalOpen] = useState(false)
   const clickedPoster = useRef<any>()
 
   return (
     <div className="poster" ref={clickedPoster} >
       <img alt={`${title} imgposter`}
         src={`https://image.tmdb.org/t/p/w300${poster_path}`} />
-      <div className="titleDiv">
-        <h3>{title.length>20?title.slice(0, 25)+'...':title}</h3>
-      </div>
-      <div className="open">
+      <div className="open" onClick={() => {
+        setModalOpen(!modalOpen)
+      }}>
         i
       </div>
+      {modalOpen && (<Modal>
+        <MoviePage setModalOpen={setModalOpen} movieData={{
+          title,
+          overview,
+          original_language,
+          release_date,
+          status,
+          poster_path,
+        }} />
+      </Modal>)}
     </div>
   )
 }
