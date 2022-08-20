@@ -2,6 +2,8 @@ import { useRef, useState } from "react"
 import { StateT } from "../../../Type"
 import MoviePage, { Modal } from "./MoviePage"
 
+const body = document.querySelector('body') as HTMLBodyElement
+
 export default function Poster({
   title,
   overview,
@@ -19,6 +21,7 @@ export default function Poster({
         src={`https://image.tmdb.org/t/p/w300${poster_path}`} />
       <div className="open" onClick={() => {
         setModalOpen(!modalOpen)
+        body.style.overflow = 'hidden'
       }}>
         i
       </div>

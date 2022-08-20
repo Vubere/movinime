@@ -1,10 +1,16 @@
 header{
   display: flex;
+  position: fixed;
+  top: 0;
   justify-content: center;
   align-items: center;
   margin: 5px;
   padding: 5px;
+  height: 33px;
+  width: 100vw;
+  background-color: #222222aa;
   border-bottom: 2px solid rgba(223, 202, 202, 0.274);
+  z-index: 2000;
   .heading{
     text-align: center;
     height: 100%;

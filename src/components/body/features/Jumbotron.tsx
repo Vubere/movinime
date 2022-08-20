@@ -1,4 +1,4 @@
-import { FC, useEffect} from "react"
+import { FC, memo, useEffect} from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { fetchTopPopularMovie } from "./movieslice"
 
@@ -25,7 +25,7 @@ const Jumbotron: FC = () => {
               src={`https://image.tmdb.org/t/p/w500${data[randNum].poster_path}`} />
             <div className="open">
               <h3>{data[randNum].title}</h3>
-              <div className="open">
+              {/* <div className="open">
                 <div className="description">
                   <p>{data[randNum].overview}</p>
                   <ul>
@@ -39,8 +39,8 @@ const Jumbotron: FC = () => {
                       Language: {data[randNum].original_language}
                     </li>
                   </ul>
-                </div>
-              </div>
+                </div> 
+              </div> */}
             </div>
           </div>
         </>
@@ -49,4 +49,4 @@ const Jumbotron: FC = () => {
   )
 }
 
-export default Jumbotron
+export default memo(Jumbotron)
