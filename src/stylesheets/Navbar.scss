@@ -1,26 +1,72 @@
 header{
   display: flex;
+  flex-direction: column;
   position: fixed;
   top: 0;
   justify-content: center;
   align-items: center;
   margin: 5px;
-  padding: 5px;
+  padding: 3px;
   height: 33px;
   width: 100vw;
-  background-color: #222222aa;
+  background-color: #222222dd;
   border-bottom: 2px solid rgba(223, 202, 202, 0.274);
   z-index: 2000;
+  .top{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .left{
+      display: flex;
+      .hamburger{
+        display: inline-block;
+        width: 24px;
+        margin-right: 8px;
+        cursor: pointer;
+        &:hover{
+          transform: scale(1.1, 1.1);
+        }
+        div{
+          width: 25px;
+          height: 1px;
+          margin-top: 3px;
+          border: 1px solid black;
+        }
+      }
+    }
+    input{
+      display: block;
+      background-color: #222222aa;
+      outline: none;
+      border: none;
+      border-radius: 8px;
+      padding: 3px;
+    }
+  }
+  .pages{
+    display: none;
+    position: fixed;
+    width: 100vw;
+    top: 33px;
+    height: 28px;
+    padding: 3px;
+    margin: 5px;
+    background-color: #222222aa;
+  }
   .heading{
     text-align: center;
     height: 100%;
-    padding: 3px;
+    width: 100%;
+    margin: 5px;
+    color: #ffffffdd;
     cursor: default;
+    transition: 1s;
     &:hover{
-      background-color: rgba(135, 135, 153, 0.438);
+      transform: scale(1.1, 1.1);
+      color: #ffffff;
     }
   }
-  .anime{
-    border-left: 1px solid white;
+  .span{
+    border: 1px solid white;
   }
 }
