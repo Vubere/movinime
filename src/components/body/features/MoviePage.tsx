@@ -29,7 +29,7 @@ export default function MoviePage({ setModalOpen, movieData }: any) {
           }}>x</div>
           <div className="movieDetails">
             <div className="img" >
-              <img alt={`${title} movie poster`} src={`https://image.tmdb.org/t/p/w500${poster_path}`} />
+              <img alt={`${title} movie poster`} src={`https://image.tmdb.org/t/p/w200${poster_path}`} />
             </div>
             <div className="details">
               <ul className="detailsList">

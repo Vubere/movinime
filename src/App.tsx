@@ -2,7 +2,7 @@ import {FC} from 'react';
 import './stylesheets/App.scss';
 import Navbar from './components/navbar/Navbar';
 import Jumbotron from './components/body/features/Jumbotron';
-import Footer from './components/footer/Footer';
+import Footer from './components/body/footer/Footer';
 import SectionSingle from './components/body/features/SectionSingle';
 
 

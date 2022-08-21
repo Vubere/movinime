@@ -1,4 +1,4 @@
-header{
+header {
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -9,41 +9,62 @@ header{
   padding: 3px;
   height: 33px;
   width: 100vw;
-  background-color: #222222dd;
+  background-color: #111111ee;
   border-bottom: 2px solid rgba(223, 202, 202, 0.274);
   z-index: 2000;
-  .top{
+  .top {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    .left{
+    .left {
       display: flex;
-      .hamburger{
+      .hamburger {
         display: inline-block;
         width: 24px;
         margin-right: 8px;
         cursor: pointer;
-        &:hover{
+        &:hover {
           transform: scale(1.1, 1.1);
         }
-        div{
+        div {
           width: 25px;
           height: 1px;
           margin-top: 3px;
-          border: 1px solid black;
+          border: 1px solid white;
         }
       }
     }
-    input{
-      display: block;
-      background-color: #222222aa;
-      outline: none;
-      border: none;
-      border-radius: 8px;
-      padding: 3px;
+    .search {
+      position: relative;
+      width: 160px;
+      margin-right: 22px;
+      input {
+        display: block;
+        background-color: #ffffff44;
+        box-sizing: border-box;
+        color: black;
+        outline: none;
+        border: none;
+        border-radius: 8px;
+        margin-right: 20px;
+        padding-left: 7px;
+        width: 100%;
+        &::placeholder{
+          color: #222d;
+        }
+      }
+      .searchbtn{
+        position: absolute;
+        display: block;
+        top: 2px;
+        right: 2px;
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+      }
     }
   }
-  .pages{
+  .pages {
     display: none;
     position: fixed;
     width: 100vw;
@@ -51,9 +72,9 @@ header{
     height: 28px;
     padding: 3px;
     margin: 5px;
-    background-color: #222222aa;
+    background-color: #000000dd;
   }
-  .heading{
+  .heading {
     text-align: center;
     height: 100%;
     width: 100%;
@@ -61,12 +82,12 @@ header{
     color: #ffffffdd;
     cursor: default;
     transition: 1s;
-    &:hover{
+    &:hover {
       transform: scale(1.1, 1.1);
       color: #ffffff;
     }
   }
-  .span{
+  .span {
     border: 1px solid white;
   }
 }

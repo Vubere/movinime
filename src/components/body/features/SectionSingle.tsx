@@ -82,7 +82,7 @@ const SectionSingle: FC = () => {
       <div className="container">
         <div className="moviesContainer">
           {arr.slice(0, num).map((data, i) => {
-            return <MoviePoster key={i} {...data} />
+            return <MoviePoster key={data.id} {...data} />
           })}
         </div>
         {!showMore ? '' :

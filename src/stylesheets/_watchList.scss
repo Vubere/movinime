@@ -1,0 +1,69 @@
+@use "variables" as *;
+
+.watchList {
+  position: fixed;
+  justify-content: center;
+  display: flex;
+
+  bottom: 0;
+  background-color: #222222ee;
+  height: 23px;
+  width: 100vw;
+}
+.icon {
+  cursor: pointer;
+  position: fixed;
+}
+.close {
+  z-index: 4001;
+  position: fixed;
+  right: 29px;
+  top: 33px;
+}
+.watchListPageContainer {
+  overflow: auto;
+  height: calc(100vh - 33px);
+  width: 100vw;
+  background-color: $movie-bg-color;
+  display: flex;
+  flex-direction: column;
+  z-index: 4000;
+  position: fixed;
+  top: 33px;
+  .listItemContainer {
+    display: flex;
+    flex-direction: column;
+    .completion{
+      display: flex;
+      border-bottom: 1px solid #333333ee;
+      flex-direction: row;
+      justify-content: space-around;
+      .remove{
+        cursor: pointer;
+      }
+      .complete{
+        cursor: pointer;
+      }
+    }
+    .watchListMovieDetails{
+      display: grid;
+      grid-template-columns: 120px calc(100% - 120px);
+      padding: 5px;
+      .img{
+        img{
+          width: 120px;
+        }
+      }
+      .movieDetails{
+        padding: 8px;
+        ul{
+          li{
+            list-style-type: none;
+          }
+        }
+      }
+
+    }
+    
+  }
+}
