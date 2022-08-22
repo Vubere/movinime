@@ -151,7 +151,7 @@ main {
         border-radius: 8px;
         padding: 4px;
         transition: 0.5s;
-        &:hover{
+        &:hover {
           transform: scale(1.06, 1.06);
           background-color: #ffffff88;
         }
@@ -197,12 +197,22 @@ footer {
     }
   }
 }
+@keyframes hieght {
+  0% {
+    transform: scale(0, 0);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
 
 .moviePage {
   .container {
     display: grid;
     grid-template-rows: 70% 30%;
     position: fixed;
+    animation: hieght 0.3s linear;
+    animation-iteration-count: 1;
     top: 33px;
     height: calc(100vh - 33px);
     padding: 10px;

@@ -20,16 +20,27 @@
   right: 29px;
   top: 33px;
 }
+
+@keyframes hieght {
+  0%{
+    height: 0;
+  }
+  100%{
+    height: calc(100vh - 33px);
+  }
+}
 .watchListPageContainer {
   overflow: auto;
   height: calc(100vh - 33px);
+  animation: hieght 0.3s linear;
+  animation-iteration-count: 1;
   width: 100vw;
   background-color: $movie-bg-color;
   display: flex;
   flex-direction: column;
   z-index: 4000;
   position: fixed;
-  top: 33px;
+  bottom: 0;
   .listItemContainer {
     display: flex;
     flex-direction: column;
