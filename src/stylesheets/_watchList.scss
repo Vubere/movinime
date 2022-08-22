@@ -21,7 +21,7 @@
   top: 33px;
 }
 
-@keyframes hieght {
+@keyframes height {
   0%{
     height: 0;
   }
@@ -32,7 +32,7 @@
 .watchListPageContainer {
   overflow: auto;
   height: calc(100vh - 33px);
-  animation: hieght 0.3s linear;
+  animation: height 0.3s linear;
   animation-iteration-count: 1;
   width: 100vw;
   background-color: $movie-bg-color;

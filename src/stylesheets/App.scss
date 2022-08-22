@@ -95,6 +95,11 @@ main {
       background-color: rgba(3, 3, 17, 0.444);
       ul > li {
         color: #ffffff82;
+        transition: 0.5s;
+        &:hover{
+          transform: scale(1.14,1.14);
+          background-color: #ffffff55;
+        }
       }
     }
     .container {
