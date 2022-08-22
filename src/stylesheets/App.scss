@@ -97,24 +97,6 @@ main {
         color: #ffffff82;
       }
     }
-    .filter {
-      position: absolute;
-      display: flex;
-      flex-direction: row;
-      padding: 1px;
-      top: 10px;
-      right: 5px;
-      width: 20%;
-      select {
-        background-color: #ffffff22;
-        width: 70%;
-        option {
-          color: black;
-          border: 0;
-          outline: 0;
-        }
-      }
-    }
     .container {
       width: 100%;
       position: relative;
@@ -123,8 +105,8 @@ main {
       align-items: center;
       .moviesContainer {
         display: grid;
-        grid-template-columns: 24% 24% 24% 24%;
-        gap: 1%;
+        grid-template-columns: 23% 23% 23% 23%;
+        gap: 2%;
         overflow: hidden;
         .poster {
           width: 100%;
@@ -132,7 +114,9 @@ main {
           border: none;
           border-radius: 10px;
           position: relative;
-          background-color: #ffffff33;
+          background-color: #ffffff11;
+          backdrop-filter: blur;
+          box-shadow: -1px -2px #ffffff77, 2px 2px #ffffff33;
           img {
             width: 100%;
             border-radius: 10px;
@@ -153,7 +137,7 @@ main {
             cursor: pointer;
             place-items: center;
             font-size: 0.7rem;
-            padding-bottom: 8px;
+            padding-bottom: 14px;
           }
         }
       }
@@ -246,6 +230,7 @@ footer {
           margin: 5px;
           li {
             list-style-type: none;
+            margin: 3px;
           }
         }
       }

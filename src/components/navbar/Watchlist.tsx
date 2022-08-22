@@ -26,10 +26,12 @@ const ListItem = ({
         </div>
         <div className="movieDetails">
           <ul className="movieDetailsList">
+            <li className="title">title:<br/>
+            {title}</li>
             <li className="detailOverview">overview:<br />{overview}</li>
-            <li className="releaseStatus">status:<br />{status}</li>
+            <li className="releaseStatus">status:<br />{status?status:'N/A'}</li>
             <li className="releaseDate">Release Date:<br />{release_date}</li>
-            <li className="genres">{original_language}</li>
+            <li className="lang">Language:<br/>{original_language?original_language:'N/A'} </li>
           </ul>
         </div>
       </div>

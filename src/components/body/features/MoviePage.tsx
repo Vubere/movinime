@@ -33,10 +33,11 @@ export default function MoviePage({ setModalOpen, movieData }: any) {
             </div>
             <div className="details">
               <ul className="detailsList">
+                <li className="title">title:<br/>{title}</li>
                 <li className="overview">overview:<br/>{overview}</li>
-                <li className="releaseStatus">status:<br/>{status}</li>
-                <li className="releaseDate">Release Date:<br/>{release_date}</li>
-                <li className="genres">{original_language}</li>
+                <li className="releaseStatus">status:<br />{status ? status : 'N/A'}</li>
+                <li className="releaseDate">Release Date:<br />{release_date}</li>
+                <li className="lang">Language:<br />{original_language ? original_language : 'N/A'} </li>
               </ul>
             </div>
             <div className="movieCast"></div>

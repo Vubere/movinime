@@ -81,10 +81,11 @@ const movieSlice = createSlice({
         state.topRated.status = "succeeded";
         state.entities.topRated = action.payload;
       })
-      .addCase(fetchTopRatedMovie.rejected, (state, action) => {
+      .addCase(fetchTopRatedMovie.rejected, (state, {payload}:any) => {
         state.topRated.status = "failed";
+        state.topRated.error = payload.message
       });
-    builder
+      builder
       .addCase(fetchTopPopularMovie.pending, (state) => {
         state.topPopular.status = "loading";
       })
@@ -92,10 +93,11 @@ const movieSlice = createSlice({
         state.entities.topPopular = action.payload;
         state.topPopular.status = "succeeded";
       })
-      .addCase(fetchTopPopularMovie.rejected, (state) => {
+      .addCase(fetchTopPopularMovie.rejected, (state, {payload}:any) => {
         state.topPopular.status = "failed";
+        state.topPopular.error = payload.message;
       });
-    builder
+      builder
       .addCase(fetchLatestMovie.pending, (state) => {
         state.latest.status = "loading";
       })
@@ -103,8 +105,9 @@ const movieSlice = createSlice({
         state.entities.latest = action.payload;
         state.latest.status = "succeeded";
       })
-      .addCase(fetchLatestMovie.rejected, (state) => {
+      .addCase(fetchLatestMovie.rejected, (state, {payload}:any) => {
         state.latest.status = "failed";
+      state.topRated.error = payload.message;
       });
     builder
       .addCase(fetchUpcomingMovie.pending, (state) => {
@@ -114,8 +117,9 @@ const movieSlice = createSlice({
         state.entities.upcoming = action.payload;
         state.upcoming.status = "succeeded";
       })
-      .addCase(fetchUpcomingMovie.rejected, (state) => {
+      .addCase(fetchUpcomingMovie.rejected, (state, {payload}:any) => {
         state.upcoming.status = "failed";
+        state.upcoming.error = payload.message;
       });
   },
 });

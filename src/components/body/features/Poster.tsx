@@ -44,7 +44,7 @@ export default function Poster({
           width
         }))
       }}>
-        Add to watch list
+        +
       </div>
       {modalOpen && (<Modal>
         <MoviePage setModalOpen={setModalOpen} movieData={{
