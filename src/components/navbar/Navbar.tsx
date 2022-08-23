@@ -1,16 +1,20 @@
 import { useRef, useState } from "react"
 import { useAppDispatch } from "../../app/hooks";
 //import { selectById, selectEntities } from "./searchSlice";
-import { fetchSearchedMovie } from "./searchSlice";
-
+import { fetchSearchedMovie } from "./search/searchSlice";
+import SearchResult from "./search/SearchResult";
 import Watchlist from "./Watchlist";
 
+const body = document.querySelector('body') as HTMLBodyElement
 
 export default function Navbar() {
   const dispatch = useAppDispatch()
   const [inputText, setInputText] = useState('')
+  const [searchModalOpen, setSearchModalOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const pages = useRef<HTMLDivElement>(null)
+
+
   return (
     <header>
       <div className="top">
@@ -38,7 +42,9 @@ export default function Navbar() {
           <button className="searchbtn" onClick={(e)=>{
             e.preventDefault()
             dispatch(fetchSearchedMovie({page: 1, search:inputText}))
+            setSearchModalOpen(true)
             setInputText('')
+            body.style.overflow = "hidden"
           }}></button>
         </form>
       </div>
@@ -52,6 +58,7 @@ export default function Navbar() {
           className="heading anime">ANIME</div>
       </div>
       <Watchlist/>
+      <SearchResult searchModalOpen={searchModalOpen} setSearchModalOpen={setSearchModalOpen}/>
     </header>
   )
 }

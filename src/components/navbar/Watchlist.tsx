@@ -26,12 +26,12 @@ const ListItem = ({
         </div>
         <div className="movieDetails">
           <ul className="movieDetailsList">
-            <li className="title">title:<br/>
-            {title}</li>
+            <li className="title">title:<br />
+              {title}</li>
             <li className="detailOverview">overview:<br />{overview}</li>
-            <li className="releaseStatus">status:<br />{status?status:'N/A'}</li>
+            <li className="releaseStatus">status:<br />{status ? status : 'N/A'}</li>
             <li className="releaseDate">Release Date:<br />{release_date}</li>
-            <li className="lang">Language:<br/>{original_language?original_language:'N/A'} </li>
+            <li className="lang">Language:<br />{original_language ? original_language : 'N/A'} </li>
           </ul>
         </div>
       </div>
@@ -58,8 +58,6 @@ export default memo(function Watchlist() {
   for (let key in datas) {
     arr.push(datas[key] as StateT)
   }
-
-  console.log(datas)
   return (
     <>
       <div className="watchList">

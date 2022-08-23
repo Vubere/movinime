@@ -3,8 +3,8 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import { StateT } from "../../Type";
-import { Api_key } from "../../app/apikey";
+import { StateT } from "../../../Type";
+import { Api_key } from "../../../app/apikey";
 
 interface fsmParamType {
   page: number;
@@ -55,4 +55,4 @@ const searchSlice = createSlice({
 });
 
 export default searchSlice.reducer;
-export const { selectEntities } = searchAdapter.getSelectors();
+export const { selectEntities: searchResult} = searchAdapter.getSelectors();

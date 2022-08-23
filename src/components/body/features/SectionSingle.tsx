@@ -1,6 +1,6 @@
 
 import MoviePoster from './Poster';
-import { FC, useEffect, useRef, useState } from "react"
+import { FC, memo, useEffect, useRef, useState } from "react"
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { fetchTopRatedMovie, fetchUpcomingMovie, fetchLatestMovie, fetchTopPopularMovie } from './movieslice';
 
@@ -11,7 +11,6 @@ type Tabtype = 'new' | 'popular' | 'rated' | 'upcoming'
 const SectionSingle: FC = () => {
   const dispatch = useAppDispatch()
   const movie = useAppSelector(state => state.movie)
-  //const movied = useAppSelector(state => state.movie.entities)
 
   const [tab, setTab] = useState<Tabtype>('new')
   const [obj, setObj] = useState<any>({
@@ -38,7 +37,6 @@ const SectionSingle: FC = () => {
           setObj((prevstate: typeof obj) => ({ ...prevstate, status: movie.upcoming.status }))
           data.current = movie.entities.upcoming
         }
-        console.log(data.current, status)
       }
       if (obj.status === 'idle') {
         obj.name === 'popular' ?
@@ -115,4 +113,4 @@ const SectionSingle: FC = () => {
     </div>
   )
 }
-export default SectionSingle
+export default memo(SectionSingle)
