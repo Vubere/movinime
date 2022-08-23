@@ -15,9 +15,16 @@
 }
 .close {
   z-index: 4001;
+  background-color: #333333ee;
+  width: 20px;
+  color: #ffffffee;
+  height: 20px;
+  text-align: center;
+  border-radius: 50%;
   position: fixed;
   right: 29px;
-  top: 33px;
+  top: 43px;
+  cursor: pointer;
 }
 
 @keyframes heightWatchList {
@@ -39,7 +46,7 @@
   flex-direction: column;
   z-index: 4000;
   position: fixed;
-  top: 33%;
+  top: 33px;
   .listItemContainer {
     display: flex;
     flex-direction: column;
