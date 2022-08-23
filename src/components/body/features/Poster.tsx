@@ -1,7 +1,8 @@
 import { useRef, useState } from "react"
 import { useAppDispatch } from "../../../app/hooks"
 import { StateT } from "../../../Type"
-import MoviePage, { Modal } from "./MoviePage"
+import MoviePage from "./MoviePage"
+import Modal from "./modal/Modal"
 import { addItem } from "../../navbar/watchlistslice"
 
 const body = document.querySelector('body') as HTMLBodyElement

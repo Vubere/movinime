@@ -1,5 +1,6 @@
 @use "watchList";
 @use "navbar";
+@use "moviePage";
 @use "variables" as *;
 
 * {
@@ -75,100 +76,6 @@ main {
       }
     }
   }
-
-  .section {
-    padding: 10px;
-    width: 100vw;
-    position: relative;
-    h2 {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-bottom: 5px;
-      width: 100%;
-      height: 30px;
-      position: sticky;
-      position: -webkit-sticky;
-      z-index: 399;
-      top: 33px;
-      display: grid;
-      place-items: center;
-      background-color: rgba(3, 3, 17, 0.444);
-      ul > li {
-        color: #ffffff82;
-        transition: 0.5s;
-        &:hover{
-          transform: scale(1.14,1.14);
-          background-color: #ffffff55;
-        }
-      }
-    }
-    .container {
-      width: 100%;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      .moviesContainer {
-        display: grid;
-        grid-template-columns: 23% 23% 23% 23%;
-        gap: 2%;
-        overflow: hidden;
-        .poster {
-          width: 100%;
-          margin: 5px;
-          border: none;
-          border-radius: 10px;
-          position: relative;
-          background-color: #ffffff11;
-          backdrop-filter: blur;
-          box-shadow: -1px -2px #ffffff77, 2px 2px #ffffff33;
-          img {
-            width: 100%;
-            border-radius: 10px;
-            height: auto;
-          }
-          .open {
-            border-radius: 100%;
-            border: 1px solid white;
-            width: 18px;
-            text-align: center;
-            position: absolute;
-            cursor: pointer;
-            top: 3px;
-            right: 3px;
-          }
-          .addToWL {
-            display: grid;
-            cursor: pointer;
-            place-items: center;
-            font-size: 0.7rem;
-            padding-bottom: 14px;
-          }
-        }
-      }
-      .showMoreBtn {
-        display: block;
-        width: 90px;
-        background-color: #ffffff55;
-        color: #ffffff;
-        outline: none;
-        border: none;
-        border-radius: 8px;
-        padding: 4px;
-        transition: 0.5s;
-        &:hover {
-          transform: scale(1.06, 1.06);
-          background-color: #ffffff88;
-        }
-      }
-      .pagination {
-        display: flex;
-        justify-content: space-between;
-        width: 150px;
-        cursor: pointer;
-      }
-    }
-  }
 }
 .poster {
   width: 150px;
@@ -202,66 +109,5 @@ footer {
     }
   }
 }
-@keyframes hieght {
-  0% {
-    transform: scale(0, 0);
-  }
-  100% {
-    transform: scale(1, 1);
-  }
-}
 
-.moviePage {
-  .container {
-    display: grid;
-    grid-template-rows: 70% 30%;
-    position: fixed;
-    animation: hieght 0.3s linear;
-    animation-iteration-count: 1;
-    top: 33px;
-    height: calc(100vh - 33px);
-    padding: 10px;
-    padding-top: 30px;
-    width: 100vw;
-    z-index: 2000;
-    background-color: $movie-bg-color;
-    border-radius: 0 20px 0 20px;
-    .movieDetails {
-      display: grid;
-      grid-template-rows: 60% 40%;
-      grid-template-columns: 30% 70%;
-      .img {
-        grid-area: 1/1/2/2;
-        img {
-          width: 90%;
-          border-radius: 8px;
-          margin: 10px;
-        }
-      }
-      .details {
-        grid-area: 1/2/2/3;
-        padding: 10px;
-        ul {
-          margin: 5px;
-          li {
-            list-style-type: none;
-            margin: 3px;
-          }
-        }
-      }
-      .movieCast {
-        grid-area: 2/1/3/3;
-      }
-    }
-    .similarMovies {
-      display: flex;
-    }
-  }
-}
-.close {
-  z-index: 30;
-  background-color: #111111ff;
-  position: fixed;
-  top: 33px;
-  cursor: pointer;
-}
+

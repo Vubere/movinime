@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { memo, useState } from "react"
 import { StateT } from "../../Type"
 import { removeItem, selectEntities } from "./watchlistslice"
-import { Modal } from "../body/features/MoviePage"
+import Modal from "../body/features/modal/Modal"
 
 
 const body = document.querySelector('body') as HTMLBodyElement

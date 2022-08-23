@@ -1,14 +1,4 @@
-import { createPortal } from "react-dom"
-//import { createRoot, Root } from "react-dom/client"
-
-/* const root = createRoot(document.getElementById('modalRoot') as Element) */
 const body = document.querySelector('body') as HTMLBodyElement
-
-export function Modal({ children }: any) {
-  return (
-    createPortal(children, document.getElementById('modalRoot') as Element)
-  )
-}
 
 export default function MoviePage({ setModalOpen, movieData }: any) {
   const {

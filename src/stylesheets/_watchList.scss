@@ -4,7 +4,6 @@
   position: fixed;
   justify-content: center;
   display: flex;
-
   bottom: 0;
   background-color: #222222ee;
   height: 23px;
@@ -40,7 +39,7 @@
   flex-direction: column;
   z-index: 4000;
   position: fixed;
-  bottom: 0;
+  top: 33%;
   .listItemContainer {
     display: flex;
     flex-direction: column;
