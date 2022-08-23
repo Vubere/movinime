@@ -55,6 +55,7 @@ export default function Poster({
           release_date,
           status,
           poster_path,
+          id
         }} />
       </Modal>)}
     </div>

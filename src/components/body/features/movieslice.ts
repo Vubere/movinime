@@ -6,6 +6,20 @@ import {
 import { Api_key } from "../../../app/apikey";
 import { StateT } from "../../../Type";
 
+type similarMovieArgType={
+  page: number;
+  movieId:number;
+}
+export const fetchSimilarMovie = createAsyncThunk<StateT[], similarMovieArgType>(
+  "movie/fetchSimilar",
+  async ({page=1, movieId}) => {
+    const api = await fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${Api_key}&language=en-US&page=${page}`
+    );
+    const res = await api.json();
+    return res.results;
+  }
+);
 export const fetchTopRatedMovie = createAsyncThunk<StateT[], number>(
   "movie/fetchTopRated",
   async (page=1) => {
@@ -67,6 +81,10 @@ const movieSlice = createSlice({
     upcoming: {
       status: "idle",
       error: "",
+    },
+    similar: {
+      status: "idle",
+      error: ""
     }
   }),
   reducers: {
@@ -109,19 +127,31 @@ const movieSlice = createSlice({
         state.latest.status = "failed";
       state.topRated.error = payload.message;
       });
-    builder
-      .addCase(fetchUpcomingMovie.pending, (state) => {
-        state.upcoming.status = "loading";
-      })
-      .addCase(fetchUpcomingMovie.fulfilled, (state, action) => {
-        state.entities.upcoming = action.payload;
-        state.upcoming.status = "succeeded";
-      })
-      .addCase(fetchUpcomingMovie.rejected, (state, {payload}:any) => {
-        state.upcoming.status = "failed";
-        state.upcoming.error = payload.message;
-      });
-  },
+      builder
+        .addCase(fetchUpcomingMovie.pending, (state) => {
+          state.upcoming.status = "loading";
+        })
+        .addCase(fetchUpcomingMovie.fulfilled, (state, action) => {
+          state.entities.upcoming = action.payload;
+          state.upcoming.status = "succeeded";
+        })
+        .addCase(fetchUpcomingMovie.rejected, (state, {payload}:any) => {
+          state.upcoming.status = "failed";
+          state.upcoming.error = payload.message;
+        });
+      builder
+        .addCase(fetchSimilarMovie.pending, (state) => {
+          state.similar.status = "loading";
+        })
+        .addCase(fetchSimilarMovie.fulfilled, (state, action) => {
+          state.entities.similar = action.payload;
+          state.similar.status = "succeeded";
+        })
+        .addCase(fetchSimilarMovie.rejected, (state, {payload}:any) => {
+          state.similar.status = "failed";
+          state.similar.error = payload.message;
+        });
+    },
 });
 
 export default movieSlice.reducer;
