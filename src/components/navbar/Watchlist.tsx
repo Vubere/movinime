@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { useState } from "react"
+import { memo, useState } from "react"
 import { StateT } from "../../Type"
 import { removeItem, selectEntities } from "./watchlistslice"
 import { Modal } from "../body/features/MoviePage"
@@ -49,7 +49,7 @@ const ListItem = ({
 
 
 
-export default function Watchlist() {
+export default memo(function Watchlist() {
   const datas = useAppSelector(state => selectEntities(state.watchlist))
   const [modalOpen, setModalOpen] = useState(false)
 
@@ -85,4 +85,4 @@ export default function Watchlist() {
       }
     </>
   )
-}
+})

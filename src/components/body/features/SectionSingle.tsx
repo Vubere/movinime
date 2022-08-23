@@ -4,9 +4,8 @@ import { FC, useEffect, useRef, useState } from "react"
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { fetchTopRatedMovie, fetchUpcomingMovie, fetchLatestMovie, fetchTopPopularMovie } from './movieslice';
 
-
-
 type Tabtype = 'new' | 'popular' | 'rated' | 'upcoming'
+
 
 
 const SectionSingle: FC = () => {

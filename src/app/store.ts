@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import movieslice from '../components/body/features/movieslice';
 import watchlistslice from '../components/navbar/watchlistslice';
+import searchSlice from '../components/navbar/searchSlice';
 
 export const store = configureStore({
   reducer: {
     movie: movieslice,
-    watchlist: watchlistslice
+    watchlist: watchlistslice,
+    searchSlice: searchSlice
   },
 });
 
