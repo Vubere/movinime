@@ -12,7 +12,7 @@
 .moviePage {
   .container {
     display: grid;
-    grid-template-rows: 70% 30%;
+    grid-template-rows: 60% 40%;
     position: fixed;
     animation: moviePageAni 0.3s linear;
     animation-iteration-count: 1;
@@ -40,6 +40,9 @@
       .details {
         grid-area: 1/2/2/3;
         padding: 10px;
+        height: 100%;
+        overflow-x: auto;
+        margin: 5px;
         ul {
           margin: 5px;
           li {
@@ -54,18 +57,21 @@
     }
     .similarMoviesContainer{
       display: flex;
-     // flex: 1;
+      
       flex-direction: column;
-     // min-height: 0px;
+      margin: 5px;
       .similarMovies {
-        display: flex;
-     //   flex: 1;
-        overflow: auto;
+        display: grid;
+        grid-template-rows: 200px;
+        width: 100vw;
+        margin: 5px;
+        gap: 4px;
+        grid-template-columns: 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px;
+        overflow:scroll;
         flex-direction: row;
         
         .poster {
             width: 110px;
-            height: 200px;
             margin: 5px;
             border: none;
             border-radius: 10px;
