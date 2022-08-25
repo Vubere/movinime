@@ -1,11 +1,11 @@
-import { useRef, useState } from "react"
-import { useAppDispatch } from "../../../app/hooks"
+import { useRef, useState} from "react"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { openMoviePageModal } from "../../../modals/modalManager"
 import { StateT } from "../../../Type"
 import MoviePage from "./MoviePage"
-import Modal from "./modal/Modal"
+import Modal from "../../../modals/Modal"
 import { addItem } from "../../navbar/watchlistslice"
 
-const body = document.querySelector('body') as HTMLBodyElement
 
 export default function Poster({
   title,
@@ -18,17 +18,18 @@ export default function Poster({
   popularity,
   width
 }: StateT) {
-  const [modalOpen, setModalOpen] = useState(false)
-  const clickedPoster = useRef<any>()
   const dispatch = useAppDispatch()
+  const modalOpen = useAppSelector(state=>state.modalStates.moviePageModal)
+  const [innerModalCheck, setInnerModalCheck] = useState(false)
+  const clickedPoster = useRef<any>()
 
   return (
     <div className="poster" ref={clickedPoster} >
       <img alt={`${title} imgposter`}
         src={`https://image.tmdb.org/t/p/w300${poster_path}`} />
       <div className="open" onClick={() => {
-        setModalOpen(!modalOpen)
-        body.style.overflow = 'hidden'
+        dispatch(openMoviePageModal(true))
+        setInnerModalCheck(true)
       }}>
         i
       </div>
@@ -47,8 +48,8 @@ export default function Poster({
       }}>
         +
       </div>
-      {modalOpen && (<Modal>
-        <MoviePage setModalOpen={setModalOpen} movieData={{
+      {innerModalCheck&&modalOpen && (<Modal>
+        <MoviePage movieData={{
           title,
           overview,
           original_language,

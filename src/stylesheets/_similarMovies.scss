@@ -1,0 +1,10 @@
+@use "variables" as *;
+
+@keyframes similarMovPage {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: calc(100vh - 33px);
+  }
+}
