@@ -3,10 +3,9 @@ import { useRef, useState, useEffect, memo } from "react"
 import { useAppSelector, useAppDispatch } from "../../../app/hooks"
 import { fetchSimilarMovie } from "./movieslice"
 import Poster from "./Poster"
-import SimilarMoviesModal from "../../../modals/SimilarMoviesModal"
-import { openSimilarMoviesModal } from "../../../modals/modalManager"
 
-function SimilarMoviesPages({ title, movieId }: { title: string, movieId:number }){
+
+function SimilarMoviesPages({ title, movieId, setModalOpen }: { title: string, movieId: number, setModalOpen: (arg: boolean) => void }) {
   const dispatch = useAppDispatch()
   const movieStatus = useAppSelector(state => state.movie.similar.status)
   const movieObj = useAppSelector(state => state.movie.entities.similar)
@@ -31,36 +30,40 @@ function SimilarMoviesPages({ title, movieId }: { title: string, movieId:number 
   for (let p in data.current) {
     arr.push(data.current[p])
   }
-  return(
+  return (
     <div className="simMovModal">
       <h3>Similar Movies to {title}</h3>
       <div className="close" onClick={() => {
-        dispatch(openSimilarMoviesModal(false))
+        setModalOpen(false)
       }}>x</div>
-      {arr.map((data) => (<Poster key={data.id} {...data} />))}
+      <div className="movies">
+        {arr.map((data) => (<Poster key={data.id} {...data} />))}
+      </div>
     </div >
   )
 }
 
 
 
-function SimilarMoviesBtn({ title, movieId }: { title: string, movieId:number}) {
-  const dispatch = useAppDispatch()
-  const modalOpen = useAppSelector(state => state.modalStates.similarMoviesModal)
-  console.log("movies")
+function SimilarMoviesBtn({ title, movieId }: { title: string, movieId: number }) {
+  // const dispatch = useAppDispatch()
 
-  
+  const [openModal, setModalOpen] = useState(false)
+
+
   return (
     <div className="similarMoviesContainer">
       <div className="similarMovies">
         <button className="simMovBtn" onClick={() => {
-          dispatch(openSimilarMoviesModal(true))}}>
+
+          setModalOpen(true)
+        }}>
           See Similar Movies...
         </button>
       </div>
-      {modalOpen&&<SimilarMoviesModal>
-        <SimilarMoviesPages title={title} movieId={movieId}/>
-      </SimilarMoviesModal>}
+      {openModal && <>
+        <SimilarMoviesPages title={title} movieId={movieId} setModalOpen={setModalOpen} />
+      </>}
     </div>
   )
 }

@@ -1,9 +1,8 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { memo} from "react"
+import { memo, useState} from "react"
 import { StateT } from "../../Type"
 import { removeItem, selectEntities } from "./watchlistslice"
-import Modal from "../../modals/Modal"
-import { openWatchListModal } from "../../modals/modalManager"
+
 
 
 const ListItem = ({
@@ -14,14 +13,21 @@ const ListItem = ({
   release_date,
   status,
   poster_path,
+  vote_average
 }: StateT) => {
   const dispatch = useAppDispatch()
+  const appState = useAppSelector(state => state.appState.page)
+
+  let url = appState === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}` :
+    poster_path;
+
+
 
   return (
     <div className="listItemContainer">
       <div className="watchListMovieDetails">
         <div className="img" >
-          <img alt={`${title} movie poster`} src={`https://image.tmdb.org/t/p/w200${poster_path}`} />
+          <img alt={`${title} movie poster`} src={url} />
         </div>
         <div className="movieDetails">
           <ul className="movieDetailsList">
@@ -31,6 +37,7 @@ const ListItem = ({
             <li className="releaseStatus">status:<br />{status ? status : 'N/A'}</li>
             <li className="releaseDate">Release Date:<br />{release_date}</li>
             <li className="lang">Language:<br />{original_language ? original_language : 'N/A'} </li>
+            <li className="rating">rating:<br />{vote_average ? `${Math.round(vote_average * 10)}%` : 'N/A'} </li>
           </ul>
         </div>
       </div>
@@ -50,8 +57,8 @@ const ListItem = ({
 
 export default memo(function Watchlist() {
   const datas = useAppSelector(state => selectEntities(state.watchlist))
-  const modalOpen = useAppSelector(state=>state.modalStates.watchListModal)
-  const dispatch = useAppDispatch()
+ // const dispatch = useAppDispatch()
+  const [modalOpen, setModalOpen] = useState(false)
 
 
   let arr = [] as StateT[]
@@ -62,22 +69,22 @@ export default memo(function Watchlist() {
     <>
       <div className="watchList">
         <div className="icon" onClick={() => {
-          dispatch(openWatchListModal(true))
+          setModalOpen(true)
         }
         }>Watch List({arr.length})</div>
       </div>
       {
         modalOpen && (
-          <Modal>
+          <>
             <div className="watchListPageContainer">
               <div className="close" onClick={() => {
-                dispatch(openWatchListModal(false))
+                setModalOpen(false)
               }}>x</div>
               {arr.map((data: StateT) => <ListItem
                 key={data.id} {...data} />
               )}
             </div>
-          </Modal>)
+          </>)
       }
     </>
   )

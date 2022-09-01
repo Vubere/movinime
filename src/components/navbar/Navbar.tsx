@@ -1,18 +1,20 @@
 import { useRef, useState } from "react"
-import { useAppDispatch, } from "../../app/hooks";
+import { useAppDispatch, useAppSelector, } from "../../app/hooks";
 //import { selectById, selectEntities } from "./searchSlice";
-import { fetchSearchedMovie } from "./search/searchSlice";
-import { openSearchModal } from "../../modals/modalManager";
+import { fetchSearchedAnime, fetchSearchedMovie } from "./search/searchSlice";
+
 import SearchResult from "./search/SearchResult";
 import Watchlist from "./Watchlist";
+import { toggleState } from "../../appSlice";
 
 
 export default function Navbar() {
   const dispatch = useAppDispatch()
+  const appState = useAppSelector(state=>state.appState)
   const [inputText, setInputText] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const pages = useRef<HTMLDivElement>(null)
-
+  const [modalOpen, setModalOpen] = useState(false)
 
   return (
     <header>
@@ -40,23 +42,31 @@ export default function Navbar() {
             }} name="search" id="search" placeholder="search" />
           <button className="searchbtn" onClick={(e)=>{
             e.preventDefault()
-            dispatch(fetchSearchedMovie({page: 1, search:inputText}))
-            dispatch(openSearchModal(true))
+            appState.page==='movie'?
+            dispatch(fetchSearchedMovie({page: 1, search:inputText})):
+            dispatch(fetchSearchedAnime(inputText))
+            setModalOpen(true)
             setInputText('')
           }}></button>
         </form>
       </div>
-      <div className="pages" ref={pages}>
-        <div aria-label="h1" className="heading" onBlur={()=>{
-          if(pages.current!==null)
-             pages.current.style.display = 'none'
+      <div className="pages" ref={pages} onBlur={() => {
+        if (pages.current !== null)
+          pages.current.style.display = 'none'
+      }}>
+        <div aria-label="h1" className="heading" 
+        onClick={()=>{
+          dispatch(toggleState('movie'))
         }}>MOVIE</div>
         <span className="span"></span>
         <div aria-label="h1"
-          className="heading anime">ANIME</div>
+          className="heading anime"
+          onClick={()=>{
+            dispatch(toggleState('anime'))
+          }}>ANIME</div>
       </div>
       <Watchlist/>
-      <SearchResult/>
+      <SearchResult modalOpen={modalOpen} setModalOpen={setModalOpen}/>
     </header>
   )
 }

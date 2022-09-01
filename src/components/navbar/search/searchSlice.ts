@@ -11,7 +11,7 @@ interface fsmParamType {
   search: string;
 }
 interface thunkReturn {
-  pafe: number;
+  page: number;
   results: StateT[];
   total_pages: number;
   total_results: number;
@@ -19,7 +19,8 @@ interface thunkReturn {
 
 const searchAdapter = createEntityAdapter<StateT>();
 const initialState = searchAdapter.getInitialState({
-  status: "idle",
+  statusMovie: "idle",
+  statusAnime: "idle",
   error: "",
 });
 
@@ -33,6 +34,16 @@ export const fetchSearchedMovie = createAsyncThunk<thunkReturn, fsmParamType>(
     return data;
   }
 );
+export const fetchSearchedAnime = createAsyncThunk<any, string>(
+  "movie/searchedAnime",
+  async (search) => {
+    const res = await fetch(
+      `https://kitsu.io/api/edge/anime?page%5Blimit%5D=20&filter%5Btext%5D=${search}&sort=-popularityRank`
+    );
+    const data = await res.json();
+    return data;
+  }
+);
 
 const searchSlice = createSlice({
   name: "searchSlice",
@@ -41,16 +52,23 @@ const searchSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchSearchedMovie.pending, (state) => {
-        state.status = "loading";
+        state.statusMovie = "loading";
       })
       .addCase(fetchSearchedMovie.fulfilled, (state, { payload }) => {
         searchAdapter.setAll(state, payload.results)
-        state.status = "fulfilled";
+        state.statusMovie = "fulfilled";
       })
       .addCase(fetchSearchedMovie.rejected, (state, { payload }: any) => {
-        state.status = "failed";
+        state.statusMovie = "failed";
         state.error = payload.message;
       });
+      builder.addCase(fetchSearchedAnime.pending, (state)=>{
+        state.statusAnime = 'loading'
+      })
+      .addCase(fetchSearchedAnime.fulfilled, (state, action)=>{
+        state.statusAnime = 'fulfilled'
+        searchAdapter.setAll(state, action.payload)
+      })
   },
 });
 

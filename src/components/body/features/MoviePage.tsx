@@ -1,15 +1,16 @@
-import { memo } from "react"
-import { useAppDispatch} from "../../../app/hooks"
-import { openMoviePageModal } from "../../../modals/modalManager"
+import { memo, useState } from "react"
+import { useAppDispatch, useAppSelector} from "../../../app/hooks"
 import SimilarMovies from "./SimilarMovies"
 import { addItem } from "../../navbar/watchlistslice"
 
 
 
 
-export default memo(function MoviePage({ movieData }: any) {
+export default memo(function MoviePage({ movieData, setInnerModalCheck }: any) {
   const dispatch = useAppDispatch()
+  const appState = useAppSelector(state => state.appState.page)
 
+  //const [set. setSet] = useState({})
   const {
     title,
     overview,
@@ -19,24 +20,22 @@ export default memo(function MoviePage({ movieData }: any) {
     poster_path,
     id,
     popularity,
-    width
+    vote_average
   } = movieData
+  let url = appState === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}` :
+    poster_path;
   
   return (
     <>
       <div className="moviePage">
         <div className="container">
           <div className="close" onClick={() => {
-            dispatch(openMoviePageModal(false))
+            setInnerModalCheck(false)
           }}>x</div>
           <div className="movieDetails">
             <div className="img" >
-              <img alt={`${title} movie poster`} src={`https://image.tmdb.org/t/p/w200${poster_path}`} />
-              <div className="addToWL" style={{
-                cursor: 'pointer'
-              }}
+              <div className="addToWL" 
                onClick={() => {
-                console.log('h')
                 dispatch(addItem({
                   title,
                   id,
@@ -46,11 +45,12 @@ export default memo(function MoviePage({ movieData }: any) {
                   status,
                   poster_path,
                   popularity,
-                  width
+                  vote_average
                 }))
               }}>
-                add to watch list
+                +
               </div>
+              <img alt={ `${title} poster`} src={url}/>
             </div>
             <div className="details">
               <ul className="detailsList">
@@ -59,11 +59,12 @@ export default memo(function MoviePage({ movieData }: any) {
                 <li className="releaseStatus">status:<br />{status ? status : 'N/A'}</li>
                 <li className="releaseDate">Release Date:<br />{release_date}</li>
                 <li className="lang">Language:<br />{original_language ? original_language : 'N/A'} </li>
+                <li className="rating">rating:<br />{vote_average ? `${Math.round(vote_average*10)}%` : 'N/A'} </li>
               </ul>
             </div>
             <div className="movieCast"></div>
-          </div>
           <SimilarMovies title={title} movieId={id} />
+          </div>
         </div>
       </div>
     </>

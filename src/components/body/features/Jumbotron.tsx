@@ -1,46 +1,31 @@
 import { FC, memo, useEffect} from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { fetchTopPopularMovie } from "./movieslice"
+import { fetchJumMovie} from "./movieslice"
 
 const Jumbotron: FC = () => {
   const dispatch = useAppDispatch()
-  const status = useAppSelector(state => state.movie.topPopular.status)
-  const data: any = useAppSelector(state => state.movie.entities.topPopular)
+  const status = useAppSelector(state => state.movie.jum.status)
+  const data: any = useAppSelector(state => state.movie.entities.jum)
+  const anime = useAppSelector((state)=>state.anime)
+  const num = Math.floor(Math.random()*20)
+
 
   useEffect(
     () => {
       if (status === 'idle')
-        dispatch(fetchTopPopularMovie(1))
+        dispatch(fetchJumMovie())
     }, [status, dispatch]
   )
-
-  const randNum = Math.floor(Math.random()*20)
-  return (
+  return (data&&
 
     <div className="jumbotron">
       {status !== 'succeeded' ? <div>loading</div> :
         <>
           <div className="poster">
-            <img alt={`${data[randNum].title} poster`}
-              src={`https://image.tmdb.org/t/p/w500${data[randNum].poster_path}`} />
+            <img alt={`${data[num].title} poster`}
+              src={`https://image.tmdb.org/t/p/w500${data[num].poster_path}`} />
             <div className="open">
-              <h3>{data[randNum].title}</h3>
-              {/* <div className="open">
-                <div className="description">
-                  <p>{data[randNum].overview}</p>
-                  <ul>
-                    <li>
-                      Status: {data[randNum].status}
-                    </li>
-                    <li>
-                      Release date: {data[randNum].release_date}
-                    </li>
-                    <li>
-                      Language: {data[randNum].original_language}
-                    </li>
-                  </ul>
-                </div> 
-              </div> */}
+              <h3>{data[num].title}</h3>
             </div>
           </div>
         </>
