@@ -1,11 +1,10 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { memo, useState } from "react"
+import { memo} from "react"
 import { StateT } from "../../Type"
 import { removeItem, selectEntities } from "./watchlistslice"
-import Modal from "../body/features/modal/Modal"
+import Modal from "../../modals/Modal"
+import { openWatchListModal } from "../../modals/modalManager"
 
-
-const body = document.querySelector('body') as HTMLBodyElement
 
 const ListItem = ({
   title,
@@ -51,7 +50,8 @@ const ListItem = ({
 
 export default memo(function Watchlist() {
   const datas = useAppSelector(state => selectEntities(state.watchlist))
-  const [modalOpen, setModalOpen] = useState(false)
+  const modalOpen = useAppSelector(state=>state.modalStates.watchListModal)
+  const dispatch = useAppDispatch()
 
 
   let arr = [] as StateT[]
@@ -62,8 +62,7 @@ export default memo(function Watchlist() {
     <>
       <div className="watchList">
         <div className="icon" onClick={() => {
-          setModalOpen(true)
-          body.style.overflow = 'hidden'
+          dispatch(openWatchListModal(true))
         }
         }>Watch List({arr.length})</div>
       </div>
@@ -72,8 +71,7 @@ export default memo(function Watchlist() {
           <Modal>
             <div className="watchListPageContainer">
               <div className="close" onClick={() => {
-                setModalOpen(false)
-                body.style.overflow = 'auto'
+                dispatch(openWatchListModal(false))
               }}>x</div>
               {arr.map((data: StateT) => <ListItem
                 key={data.id} {...data} />

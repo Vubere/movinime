@@ -1,20 +1,17 @@
-import { useAppSelector } from "../../../app/hooks"
+import { useAppSelector, useAppDispatch } from "../../../app/hooks"
+import { openSearchModal } from "../../../modals/modalManager"
 import { memo } from "react"
 import { StateT } from "../../../Type"
 import { searchResult } from "./searchSlice"
-import SearchModal from "./SearchModal"
+import SearchModal from "../../../modals/SearchModal"
 import Poster from "../../body/features/Poster"
 
 
-const body = document.querySelector('body') as HTMLBodyElement
-
-type SearchResultPropType = {
-  searchModalOpen: boolean;
-  setSearchModalOpen: (arg: boolean) => void;
-}
 export default memo(
-  function SearchResultPage({ searchModalOpen, setSearchModalOpen }: SearchResultPropType) {
+  function SearchResultPage() {
     const datas = useAppSelector(state => searchResult(state.searchResult))
+    const modalOpen = useAppSelector(state => state.modalStates.searchModal)
+    const dispatch = useAppDispatch()
     let arr = [] as StateT[]
     for (let key in datas) {
       arr.push(datas[key] as StateT)
@@ -22,12 +19,11 @@ export default memo(
     return (
       <>
         {
-          searchModalOpen && (
+          modalOpen && (
             <SearchModal>
               <div className="searchListPageContainer">
                 <div className="close" onClick={() => {
-                  setSearchModalOpen(false)
-                  body.style.overflow = 'auto'
+                  dispatch(openSearchModal(false))
                 }}>x</div>
                 {arr.map((data: StateT) => (
                   <div className="searchPosterContainer" key={data.id}>
