@@ -1,4 +1,4 @@
-import { memo, useState } from "react"
+import { memo} from "react"
 import { useAppDispatch, useAppSelector} from "../../../app/hooks"
 import SimilarMovies from "./SimilarMovies"
 import { addItem } from "../../navbar/watchlistslice"
