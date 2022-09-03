@@ -1,10 +1,12 @@
 import { useRef, useState} from "react"
 import { useAppDispatch, useAppSelector} from "../../../app/hooks"
 import { StateT } from "../../../Type"
-import MoviePage from "./MoviePage"
 import { addItem } from "../../navbar/watchlistslice"
+import { moviePage, similarPage } from "./popupPageSlice"
 
-
+type extra = {
+  type?: string
+}
 
 export default function Poster({
   title,
@@ -15,12 +17,25 @@ export default function Poster({
   status,
   poster_path,
   popularity,
-  vote_average
-}: StateT) {
-  const [innerModalCheck, setInnerModalCheck] = useState(false)
+  vote_average,
+  type
+}: StateT&extra) {
+
   const appState = useAppSelector(state => state.appState.page)
+  const dispatch = useAppDispatch() 
+
   const clickedPoster = useRef<any>()
-  const dispatch = useAppDispatch()
+  const movieData = {
+    title,
+    id,
+    overview,
+    original_language,
+    release_date,
+    status,
+    poster_path,
+    popularity,
+    vote_average
+  }
 
   let url = appState === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}`:
   poster_path;
@@ -30,7 +45,12 @@ export default function Poster({
       <img alt={`${title} imgposter`}
         src={url} />
       <div className="open" onClick={() => {
-        setInnerModalCheck(true)
+        dispatch(moviePage({open:true, data:movieData}))
+        if(type!==undefined){
+          if(type==='simMov'){
+            dispatch(similarPage(false))
+          }
+        }
       }}>
         i
       </div>
@@ -49,20 +69,6 @@ export default function Poster({
       }}>
         +
       </div>
-      {innerModalCheck&&(<>
-        <MoviePage movieData={{
-          title,
-          overview,
-          original_language,
-          release_date,
-          status,
-          poster_path,
-          id,
-          vote_average
-        }}
-        setInnerModalCheck={setInnerModalCheck}
-        />
-      </>)}
     </div>
   )
 }

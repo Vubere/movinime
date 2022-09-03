@@ -9,23 +9,7 @@
   height: 23px;
   width: 100vw;
 }
-.icon {
-  cursor: pointer;
-  position: fixed;
-}
-.close {
-  z-index: 4001;
-  background-color: #333333ee;
-  width: 20px;
-  color: #ffffffee;
-  height: 20px;
-  text-align: center;
-  border-radius: 50%;
-  position: fixed;
-  right: 29px;
-  top: 43px;
-  cursor: pointer;
-}
+
 
 @keyframes heightWatchList {
   0%{
@@ -47,6 +31,14 @@
   z-index: 4000;
   position: fixed;
   top: 33px;
+  .empty{
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    @include otherFonts;
+    font-size: 2em;
+    transform: translate(-50%, -50%);
+  }
   .listItemContainer {
     display: flex;
     flex-direction: column;
@@ -74,8 +66,12 @@
       .movieDetails{
         padding: 8px;
         ul{
+          li.title{
+            @include titleFont;
+          }
           li{
             list-style-type: none;
+            @include descriptionFont;
           }
         }
       }

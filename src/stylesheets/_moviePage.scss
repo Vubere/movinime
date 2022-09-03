@@ -21,7 +21,7 @@
     position: fixed;
     animation: moviePageAni 0.3s linear;
     animation-iteration-count: 1;
-    top: 0;
+    top: 33px;
     height: calc(100vh - 33px);
     padding: 10px;
     padding-top: 30px;
@@ -29,6 +29,12 @@
     z-index: 200;
     background-color: $movie-bg-color;
     border-radius: 0 20px 0 20px;
+    .back{
+      position: absolute;
+      top: 5px;
+      left: 33px;
+      cursor: pointer;
+    }
     .movieDetails {
       display: grid;
       width: 100vw;
@@ -66,7 +72,12 @@
         margin: 5px;
         ul {
           margin: 5px;
+          li.title{
+            @include titleFont;
+            font-size: 1.8em;
+          }
           li {
+            @include descriptionFont;
             list-style-type: none;
             margin: 3px;
           }

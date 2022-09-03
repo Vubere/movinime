@@ -1,1 +1,11 @@
 $movie-bg-color: rgb(3, 3, 17);
+
+@mixin titleFont {
+  font-family: 'Paytone One', sans-serif;
+}
+@mixin descriptionFont {
+  font-family: 'Quicksand', sans-serif;
+}
+@mixin otherFonts {
+  font-family: 'Cormorant SC', serif;
+}

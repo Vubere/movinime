@@ -3,9 +3,10 @@ import { useRef, useState, useEffect, memo } from "react"
 import { useAppSelector, useAppDispatch } from "../../../app/hooks"
 import { fetchSimilarMovie } from "./movieslice"
 import Poster from "./Poster"
+import { similarPage } from "./popupPageSlice"
 
 
-function SimilarMoviesPages({ title, movieId, setModalOpen }: { title: string, movieId: number, setModalOpen: (arg: boolean) => void }) {
+function SimilarMoviesPages({ title, movieId }: { title: string, movieId: number}) {
   const dispatch = useAppDispatch()
   const movieStatus = useAppSelector(state => state.movie.similar.status)
   const movieObj = useAppSelector(state => state.movie.entities.similar)
@@ -34,10 +35,10 @@ function SimilarMoviesPages({ title, movieId, setModalOpen }: { title: string, m
     <div className="simMovModal">
       <h3>Similar Movies to {title}</h3>
       <div className="close" onClick={() => {
-        setModalOpen(false)
+        dispatch(similarPage(false))
       }}>x</div>
       <div className="movies">
-        {arr.map((data) => (<Poster key={data.id} {...data} />))}
+        {arr.map((data) => (<Poster key={data.id} type='simMov' {...data} />))}
       </div>
     </div >
   )
@@ -48,21 +49,20 @@ function SimilarMoviesPages({ title, movieId, setModalOpen }: { title: string, m
 function SimilarMoviesBtn({ title, movieId }: { title: string, movieId: number }) {
   // const dispatch = useAppDispatch()
 
-  const [openModal, setModalOpen] = useState(false)
-
+  const openModal = useAppSelector(state=>state.pageState.similarPage.open)
+  const dispatch = useAppDispatch()
 
   return (
     <div className="similarMoviesContainer">
       <div className="similarMovies">
         <button className="simMovBtn" onClick={() => {
-
-          setModalOpen(true)
+          dispatch(similarPage(true))
         }}>
           See Similar Movies...
         </button>
       </div>
       {openModal && <>
-        <SimilarMoviesPages title={title} movieId={movieId} setModalOpen={setModalOpen} />
+        <SimilarMoviesPages title={title} movieId={movieId} />
       </>}
     </div>
   )

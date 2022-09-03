@@ -4,6 +4,7 @@ import movieslice from '../components/body/features/movieslice';
 import watchlistslice from '../components/navbar/watchlistslice';
 import searchSlice from '../components/navbar/search/searchSlice';
 import animeSlice from '../components/anime/animeSlice';
+import popupPageSlice from '../components/body/features/popupPageSlice';
 
 
 export const store = configureStore({
@@ -12,7 +13,8 @@ export const store = configureStore({
     movie: movieslice,
     watchlist: watchlistslice,
     searchResult: searchSlice,
-    anime: animeSlice
+    anime: animeSlice,
+    pageState: popupPageSlice
   },
 });
 

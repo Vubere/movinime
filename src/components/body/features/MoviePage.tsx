@@ -2,13 +2,17 @@ import { memo, useState } from "react"
 import { useAppDispatch, useAppSelector} from "../../../app/hooks"
 import SimilarMovies from "./SimilarMovies"
 import { addItem } from "../../navbar/watchlistslice"
+import { StateT } from "../../../Type"
+import { back, moviePage, reset } from "./popupPageSlice"
 
 
 
 
-export default memo(function MoviePage({ movieData, setInnerModalCheck }: any) {
+
+export default memo(function MoviePage({ setInnerModalCheck }: any) {
   const dispatch = useAppDispatch()
   const appState = useAppSelector(state => state.appState.page)
+  const moviePageDataArray = useAppSelector(state=>state.pageState.moviePage.history)
 
   //const [set. setSet] = useState({})
   const {
@@ -21,7 +25,8 @@ export default memo(function MoviePage({ movieData, setInnerModalCheck }: any) {
     id,
     popularity,
     vote_average
-  } = movieData
+  }:StateT = moviePageDataArray[moviePageDataArray.length-1]
+
   let url = appState === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}` :
     poster_path;
   
@@ -29,8 +34,15 @@ export default memo(function MoviePage({ movieData, setInnerModalCheck }: any) {
     <>
       <div className="moviePage">
         <div className="container">
+          <div className="back" onClick={()=>{
+            if(moviePageDataArray.length===1){              
+              dispatch(moviePage({open:false}))
+            }
+            dispatch(back())
+          }}>{'<<'}</div>
           <div className="close" onClick={() => {
-            setInnerModalCheck(false)
+            dispatch(moviePage({open:false}))
+            dispatch(reset())
           }}>x</div>
           <div className="movieDetails">
             <div className="img" >
@@ -54,8 +66,8 @@ export default memo(function MoviePage({ movieData, setInnerModalCheck }: any) {
             </div>
             <div className="details">
               <ul className="detailsList">
-                <li className="title">title:<br />{title}</li>
-                <li className="overview">overview:<br />{overview}</li>
+                <li className="title">{title}</li>
+                <li className="overview">{overview}</li>
                 <li className="releaseStatus">status:<br />{status ? status : 'N/A'}</li>
                 <li className="releaseDate">Release Date:<br />{release_date}</li>
                 <li className="lang">Language:<br />{original_language ? original_language : 'N/A'} </li>

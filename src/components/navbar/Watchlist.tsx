@@ -31,9 +31,9 @@ const ListItem = ({
         </div>
         <div className="movieDetails">
           <ul className="movieDetailsList">
-            <li className="title">title:<br />
+            <li className="title">
               {title}</li>
-            <li className="detailOverview">overview:<br />{overview}</li>
+            <li className="detailOverview">{overview}</li>
             <li className="releaseStatus">status:<br />{status ? status : 'N/A'}</li>
             <li className="releaseDate">Release Date:<br />{release_date}</li>
             <li className="lang">Language:<br />{original_language ? original_language : 'N/A'} </li>
@@ -80,7 +80,11 @@ export default memo(function Watchlist() {
               <div className="close" onClick={() => {
                 setModalOpen(false)
               }}>x</div>
-              {arr.map((data: StateT) => <ListItem
+              {arr.length===0?
+              <div className="empty">
+                Nothing here...
+              </div>
+              :arr.map((data: StateT) => <ListItem
                 key={data.id} {...data} />
               )}
             </div>

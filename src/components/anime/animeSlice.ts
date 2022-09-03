@@ -2,6 +2,7 @@ import {
   createAsyncThunk,
   createSlice,
 } from "@reduxjs/toolkit";
+import { Api_key } from "../../app/apikey";
 
 
 export const fetchPopular = createAsyncThunk("anime/popular", async () => {
@@ -13,9 +14,10 @@ export const fetchPopular = createAsyncThunk("anime/popular", async () => {
 });
 export const fetchNew = createAsyncThunk("anime/new", async () => {
   const response = await fetch(
-    "https://kitsu.io/api/edge/anime?page%5Blimit%5D=20&filter%5Bcategories%5D=new&sort=-popularityRank"
+    `https://api.themoviedb.org/3/tv/popular?api_key=${Api_key}&language=en-US&page=1k`
   );
   const data = response.json()
+  console.log(data)
   return data;
 });
 export const fetchSearch = createAsyncThunk("anime/new", async (text:string) => {

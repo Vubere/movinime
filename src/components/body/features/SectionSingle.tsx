@@ -25,7 +25,7 @@ const SectionSingle: FC = () => {
   const [showMore, setShowMore] = useState<boolean>(false)
   const [pageNum, setPageNum] = useState<number>(1)
   let data = useRef<any>()
-  let dataSet;
+
 
   useEffect(
     () => {
