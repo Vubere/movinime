@@ -4,9 +4,9 @@ import { fetchJumMovie} from "./movieslice"
 
 const Jumbotron: FC = () => {
   const dispatch = useAppDispatch()
-  const status = useAppSelector(state => state.movie.jum.status)
+  const status:string = useAppSelector(state => state.movie.jum.status)
   const data: any = useAppSelector(state => state.movie.entities.jum)
-  const anime = useAppSelector((state)=>state.anime)
+  //const anime = useAppSelector((state)=>state.anime)
   const num = Math.floor(Math.random()*20)
 
 
