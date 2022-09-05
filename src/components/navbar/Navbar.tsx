@@ -1,7 +1,7 @@
 import { useRef, useState } from "react"
 import { useAppDispatch, useAppSelector, } from "../../app/hooks";
 //import { selectById, selectEntities } from "./searchSlice";
-import { fetchSearchedAnime, fetchSearchedMovie } from "./search/searchSlice";
+import { fetchSearch, fetchSearchedMovie } from "./search/searchSlice";
 
 import SearchResult from "./search/SearchResult";
 import Watchlist from "./Watchlist";
@@ -44,7 +44,7 @@ export default function Navbar() {
             e.preventDefault()
             appState.page==='movie'?
             dispatch(fetchSearchedMovie({page: 1, search:inputText})):
-            dispatch(fetchSearchedAnime(inputText))
+            dispatch(fetchSearch(inputText))
             setModalOpen(true)
             setInputText('')
           }}></button>

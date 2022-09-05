@@ -18,11 +18,17 @@ interface thunkReturn {
 }
 
 const searchAdapter = createEntityAdapter<StateT>();
-const initialState = searchAdapter.getInitialState({
-  statusMovie: "idle",
-  statusAnime: "idle",
-  error: "",
-});
+const initialState:{
+  statusMovie:string,
+  statusAnime: string,
+  error: string,
+  result: StateT[]
+} = {
+    statusMovie: "idle",
+    statusAnime: "idle",
+    error: "",
+    result: []
+}
 
 export const fetchSearchedMovie = createAsyncThunk<thunkReturn, fsmParamType>(
   "movie/searchedMovie",
@@ -34,13 +40,13 @@ export const fetchSearchedMovie = createAsyncThunk<thunkReturn, fsmParamType>(
     return data;
   }
 );
-export const fetchSearchedAnime = createAsyncThunk<any, string>(
-  "movie/searchedAnime",
-  async (search) => {
-    const res = await fetch(
-      `https://kitsu.io/api/edge/anime?page%5Blimit%5D=20&filter%5Btext%5D=${search}&sort=-popularityRank`
+export const fetchSearch = createAsyncThunk(
+  "anime/search",
+  async (text: string) => {
+    const response = await fetch(
+      `https://api.jikan.moe/v4/anime?q=${text}&limit=25&order_by=popularity`
     );
-    const data = await res.json();
+    const data = await response.json();
     return data;
   }
 );
@@ -54,23 +60,29 @@ const searchSlice = createSlice({
       .addCase(fetchSearchedMovie.pending, (state) => {
         state.statusMovie = "loading";
       })
-      .addCase(fetchSearchedMovie.fulfilled, (state, { payload }) => {
-        searchAdapter.setAll(state, payload.results)
+      .addCase(fetchSearchedMovie.fulfilled, (state, { payload }:any) => {
+        state.result = payload.results
         state.statusMovie = "fulfilled";
       })
       .addCase(fetchSearchedMovie.rejected, (state, { payload }: any) => {
         state.statusMovie = "failed";
         state.error = payload.message;
       });
-      builder.addCase(fetchSearchedAnime.pending, (state)=>{
-        state.statusAnime = 'loading'
+      builder
+      .addCase(fetchSearch.pending, (state, action) => {
+        state.statusAnime = "loading";
       })
-      .addCase(fetchSearchedAnime.fulfilled, (state, action)=>{
-        state.statusAnime = 'fulfilled'
-        searchAdapter.setAll(state, action.payload)
+      .addCase(fetchSearch.fulfilled, (state, {payload}:any) => {
+        state.result = payload.data
+        state.statusAnime = "fulfilled";
+
       })
+      .addCase(fetchSearch.rejected, (state, action) => {
+        state.error = `${action.payload}`;
+        state.statusAnime = "failed";
+      });
   },
 });
 
 export default searchSlice.reducer;
-export const { selectEntities: searchResult} = searchAdapter.getSelectors();
+export const { selectEntities: searchResult } = searchAdapter.getSelectors();

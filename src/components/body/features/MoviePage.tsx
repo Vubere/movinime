@@ -75,7 +75,10 @@ export default memo(function MoviePage({ setInnerModalCheck }: any) {
               </ul>
             </div>
             <div className="movieCast"></div>
-          <SimilarMovies title={title} movieId={id} />
+            {
+              appState==='movie'?
+              <SimilarMovies title={title} movieId={id} />:''
+            }
           </div>
         </div>
       </div>

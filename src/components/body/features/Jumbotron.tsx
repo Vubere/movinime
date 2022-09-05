@@ -1,20 +1,28 @@
 import { FC, memo, useEffect} from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { fetchJumMovie} from "./movieslice"
+import { fetchAnimeJumb } from "../../anime/animeSlice"
 
 const Jumbotron: FC = () => {
   const dispatch = useAppDispatch()
-  const status:string = useAppSelector(state => state.movie.jum.status)
-  const data: any = useAppSelector(state => state.movie.entities.jum)
-  //const anime = useAppSelector((state)=>state.anime)
+  const movieStatus:string = useAppSelector(state => state.movie.jum.status)
+  const movie: any = useAppSelector(state => state.movie.entities.jum)
+  const appState:string = useAppSelector(state=>state.appState.page)
+  const anime:any = useAppSelector((state)=>state.anime.jum.data)
+  const animeStatus:string = useAppSelector(state=>state.anime.jum.status)
   const num = Math.floor(Math.random()*20)
 
-
+  let data = appState==='movie'?movie:anime.data
+  console.log(data)
+  let status = appState==='movie'?movieStatus:animeStatus
+  console.log(status)
   useEffect(
     () => {
       if (status === 'idle')
-        dispatch(fetchJumMovie())
-    }, [status, dispatch]
+        appState==='movie'?
+          dispatch(fetchJumMovie()):
+          dispatch(fetchAnimeJumb())
+    }, [appState, dispatch, status]
   )
   return (data&&
 
@@ -23,7 +31,7 @@ const Jumbotron: FC = () => {
         <>
           <div className="poster">
             <img alt={`${data[num].title} poster`}
-              src={`https://image.tmdb.org/t/p/w500${data[num].poster_path}`} />
+              src={appState === 'movie' ? `https://image.tmdb.org/t/p/w500${data[num].poster_path}`:data[num].images.jpg.large_image_url} />
             <div className="open">
               <h3>{data[num].title}</h3>
             </div>

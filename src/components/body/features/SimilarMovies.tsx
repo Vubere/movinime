@@ -13,13 +13,15 @@ function SimilarMoviesPages({ title, movieId }: { title: string, movieId: number
   const [obj, setObj] = useState<any>({
     status: 'idle',
   })
+
   const data = useRef<any>()
 
   useEffect(
     () => {
       const toggle: () => void = async () => {
-        setObj((prevstate: typeof obj) => ({ ...prevstate, status: movieStatus }))
-        data.current = movieObj
+
+          setObj((prevstate: typeof obj) => ({ ...prevstate, status: movieStatus }))
+          data.current = movieObj
       }
       if (obj.status === 'idle') {
         dispatch(fetchSimilarMovie({ page: 1, movieId: movieId }))
@@ -27,7 +29,7 @@ function SimilarMoviesPages({ title, movieId }: { title: string, movieId: number
       toggle()
     }, [obj.status, dispatch, movieStatus, movieObj, movieId]
   )
-  let arr: StateT[] = []
+  let arr:any = []
   for (let p in data.current) {
     arr.push(data.current[p])
   }
@@ -38,7 +40,7 @@ function SimilarMoviesPages({ title, movieId }: { title: string, movieId: number
         dispatch(similarPage(false))
       }}>x</div>
       <div className="movies">
-        {arr.map((data) => (<Poster key={data.id} type='simMov' {...data} />))}
+        {arr.map((data:StateT) => (<Poster key={data.id} type='simMov' {...data} />))}
       </div>
     </div >
   )

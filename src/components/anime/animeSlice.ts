@@ -2,31 +2,28 @@ import {
   createAsyncThunk,
   createSlice,
 } from "@reduxjs/toolkit";
-import { Api_key } from "../../app/apikey";
 
 
 export const fetchPopular = createAsyncThunk("anime/popular", async () => {
   const response = await fetch(
-    "https://kitsu.io/api/edge/categories?page%5Blimit%5D=100"
+    `https://api.jikan.moe/v4/top/anime?page=1&filter=bypopularity`
   );
-  const data = response.json()
+  const data = await response.json()
+  return data;
+});
+export const fetchAnimeJumb = createAsyncThunk("anime/jum", async () => {
+  const response = await fetch(
+    `https://api.jikan.moe/v4/top/anime?page=1&filter=bypopularity&filter=airing`
+  );
+  const data = await response.json()
   return data;
 });
 export const fetchNew = createAsyncThunk("anime/new", async () => {
-  const response = await fetch(
-    `https://api.themoviedb.org/3/tv/popular?api_key=${Api_key}&language=en-US&page=1k`
-  );
-  const data = response.json()
-  console.log(data)
+  const response = await fetch(`https://api.jikan.moe/v4/top/anime?page=1&type=tv&filter=bypopularity&filter=airing`); 
+  const data = await response.json()
   return data;
 });
-export const fetchSearch = createAsyncThunk("anime/new", async (text:string) => {
-  const response = await fetch(
-    `https://kitsu.io/api/edge/anime?page%5Blimit%5D=20&filter%5Btext%5D=${text}`
-  );
-  const data = response.json()
-  return data;
-});
+
 
 
 
@@ -43,6 +40,14 @@ const animeSlice = createSlice({
       status: "idle",
       data:{}
     },
+    search: {
+      status: "idle",
+      data:{}
+    },
+    jum: {
+      status: "idle",
+      data:{}
+    },
   },
   reducers: {},
   extraReducers(builder) {
@@ -51,12 +56,10 @@ const animeSlice = createSlice({
         state.popular.status = "loading";
       })
       .addCase(fetchPopular.fulfilled, (state, action) => {
-        console.log(action)
-        state.new.data = action.payload
+        state.popular.data = action.payload
         state.popular.status = "fulfilled";
       })
       .addCase(fetchPopular.rejected, (state, action) => {
-        console.log(action)
         state.error = `${action.payload}`;
         state.popular.status = "failed";
       });
@@ -72,6 +75,19 @@ const animeSlice = createSlice({
         state.error = `${action.payload}`;
         state.new.status = "failed";
       });
+    builder
+      .addCase(fetchAnimeJumb.pending, (state, action) => {
+        state.jum.status = "loading";
+      })
+      .addCase(fetchAnimeJumb.fulfilled, (state, action) => {
+        state.jum.status = "succeeded";
+        state.jum.data = action.payload
+      })
+      .addCase(fetchAnimeJumb.rejected, (state, action) => {
+        state.error = `${action.payload}`;
+        state.jum.status = "failed";
+      });
+    
   },
 });
 

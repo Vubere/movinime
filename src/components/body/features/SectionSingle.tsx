@@ -5,7 +5,9 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { fetchTopRatedMovie, fetchUpcomingMovie, fetchLatestMovie, fetchTopPopularMovie } from './movieslice';
 import { fetchPopular, fetchNew } from '../../anime/animeSlice';
 
-type Tabtype = 'new' | 'popular' | 'rated' | 'upcoming'
+type TabtypeMovie = 'new' | 'popular' | 'rated' | 'upcoming'
+type TabtypeAnime = 'airing' | 'top'
+
 
 
 
@@ -16,15 +18,19 @@ const SectionSingle: FC = () => {
   const animePop = useAppSelector(state => state.anime.popular.data)
   const animeNew = useAppSelector(state => state.anime.new.data)
   const appState = useAppSelector(state => state.appState.page)
-  const [tab, setTab] = useState<Tabtype>('new')
+  const [movieTab, setMovieTab] = useState<TabtypeMovie>('new')
+  const [animeTab, setAnimeTab] = useState<TabtypeAnime>('airing')
   const [obj, setObj] = useState<any>({
     status: 'idle',
     name: 'new'
   })
+  const [animeState, setAnimeState] = useState<any>({
+    status: 'idle',
+    name: 'airing'
+  })
   const [showMore, setShowMore] = useState<boolean>(false)
   const [pageNum, setPageNum] = useState<number>(1)
   let data = useRef<any>()
-
 
   useEffect(
     () => {
@@ -53,69 +59,78 @@ const SectionSingle: FC = () => {
         }
       }
       const toggleAnime: (arg: string, arg2: string) => void = (name, status) => {
-        if (name === 'popular') {
-          setObj((prevstate: typeof obj) => ({ ...prevstate, status: anime.popular.status }))
-          data.current = animePop
-          if (obj.status === 'idle') {
+        if (name === 'top') {
+          if (status === 'idle') {       
             dispatch(fetchPopular())
           }
-        }else if(name==='new'){
-          setObj((prevstate: typeof obj) => ({ ...prevstate, status: anime.new.status }))
-          data.current = animeNew
-          if (obj.status === 'idle') {
+          setAnimeState((prevstate: typeof obj) => ({ ...prevstate, status: anime.popular.status }))
+          data.current = animePop
+        } else if (name === 'airing') {
+          if (status === 'idle') {
             dispatch(fetchNew())
           }
+          setAnimeState((prevstate: typeof obj) => ({ ...prevstate, status: anime.new.status }))
+          data.current = animeNew
         }
       }
       appState === 'anime' ?
-        toggleAnime(obj.name, obj.status) :
+        toggleAnime(animeState.name, animeState.status) :
         toggleMovies(obj.name, obj.status);
-    }, [obj.name, obj.status, dispatch, appState, movie, animePop, animeNew, anime.new.status, anime.popular.status, pageNum]
+    }, [obj.name, obj.status, dispatch, appState, movie, animePop, animeState.name, animeState.status, animeNew, anime.new.status, anime.popular.status, pageNum]
   )
-  let tabToggle: (name: Tabtype) => void
+  let tabMovieToggle: (arg: TabtypeMovie) => void;
+  let tabAnimeToggle: (arg: TabtypeAnime) => void;
+
   const arr = []
   let num = showMore ? 20 : 12;
   if (appState === 'movie') {
-    tabToggle = (name: Tabtype) => {
-      if (tab === name) {
+    tabMovieToggle = (name: TabtypeMovie) => {
+      if (movieTab === name) {
         return
       }
       if (pageNum !== 1) {
         setPageNum(1)
       }
-      setTab(name)
+      setMovieTab(name)
       setObj({ ...obj, name: name })
     }
-    tabToggle(tab)
+    tabMovieToggle(movieTab)
     for (let p in data.current) {
       arr.push(data.current[p])
     }
   } else {
-    tabToggle = (name: Tabtype) => {
-      if (tab === name) {
+    tabAnimeToggle = (name: TabtypeAnime) => {
+      if (animeTab === name) {
         return
       }
-      setTab(name)
-      setObj({ ...obj, name: name })
+      setAnimeTab(name)
+      setAnimeState({ ...obj, name: name })
     }
-    tabToggle(tab)
+    tabAnimeToggle(animeTab)
     if (data.current) {
-        for (let q in data.current.data) {
-          arr.push(data.current.data[q])
-          console.log(data.current.data[q])
-        }
-      
+      for (let q in data.current.data) {
+        arr.push(data.current.data[q])
+      }
+
     }
   }
   return (
     <div className='section single'>
       <h2>
-        <ul>
-          <li onClick={() => tabToggle('new')
-          }>New</li>|
-          <li onClick={() => tabToggle('popular')}>Popular</li>|
-          <li onClick={() => tabToggle('rated')}>Top Rated</li>|
-          <li onClick={() => tabToggle('upcoming')}>Upcoming</li>
+        <ul>{appState === 'anime' ?
+          <>
+            <li className="airing" onClick={() => tabAnimeToggle('airing')
+            }>airing</li>
+            <li className="top" onClick={() => tabAnimeToggle('top')
+            }>top</li>
+          </> :
+          <>
+            <li onClick={() => tabMovieToggle('new')
+            }>New</li>|
+            <li onClick={() => tabMovieToggle('popular')}>Popular</li>|
+            <li onClick={() => tabMovieToggle('rated')}>Top Rated</li>|
+            <li onClick={() => tabMovieToggle('upcoming')}>Upcoming</li>
+          </>}
         </ul>
       </h2>
       <div className="container">
@@ -124,41 +139,40 @@ const SectionSingle: FC = () => {
             return <MoviePoster key={data.id} {...data} />
           }) :
             arr.slice(0, num).map((data) => {
-              console.log(data)
-              return <MoviePoster key={data.id}
-                title={data.attributes.canonicalTitle}
-                poster_path={data.attributes.posterImage.small}
-                overview={data.attributes.synopsis}
-                status={data.attributes.status}
-                id={data.id}
+              return <MoviePoster key={data.mal_id}
+                title={data.title}
+                poster_path={data.images.jpg.image_url}
+                overview={data.synopsis}
+                status={data.status}
+                id={data.mal_id}
                 original_language={['ja']}
-                release_date={data.attributes.startDate}
-                episodeLength={data.attributes.episodeLength}
-                popularity={data.attributes.popularity}
-                vote_average={data.attributes.ratingRank}
+                release_date={data.year}
+                episodeLength={data.episodes}
+                popularity={data.popularity}
+                vote_average={data.score}
               />
             })
           }
         </div>
         {!showMore ? '' :
           <div className="pagination">
-            <div onClick={()=>{
-              if(pageNum===1) return
+            <div onClick={() => {
+              if (pageNum === 1) return
               setObj({ ...obj, status: 'idle' })
               setPageNum(1)
             }}>&lt; &lt;</div>
             <div>{pageNum}</div>
             <div onClick={() => {
-              if(pageNum+1>10) return
+              if (pageNum + 1 > 10) return
               setObj({ ...obj, status: 'idle' })
-              setPageNum(pageNum+1)
-              
-            }}>{pageNum+1>10?'':pageNum+1}</ div>
+              setPageNum(pageNum + 1)
+
+            }}>{pageNum + 1 > 10 ? '' : pageNum + 1}</ div>
             <div onClick={() => {
-              if(pageNum+2>10) return
+              if (pageNum + 2 > 10) return
               setObj({ ...obj, status: 'idle' })
-              setPageNum(pageNum+2)
-            }}>{pageNum+2 > 10 ? '' : pageNum+2}</ div>
+              setPageNum(pageNum + 2)
+            }}>{pageNum + 2 > 10 ? '' : pageNum + 2}</ div>
           </div>}
         <button className='showMoreBtn' style={{ color: 'black' }}
           onClick={() => setShowMore(!showMore)}>{!showMore ? 'show more' : 'show less'}</button>
