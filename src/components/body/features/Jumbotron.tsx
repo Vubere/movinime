@@ -2,7 +2,7 @@ import { FC, memo, useEffect} from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { fetchJumMovie} from "./movieslice"
 import { fetchAnimeJumb } from "../../anime/animeSlice"
-import { moviePage } from "./popupPageSlice"
+
 
 const Jumbotron: FC = () => {
   const dispatch = useAppDispatch()
