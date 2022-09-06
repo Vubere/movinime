@@ -3,10 +3,10 @@ import MoviePoster from './Poster';
 import { FC, memo, useEffect, useRef, useState } from "react"
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { fetchTopRatedMovie, fetchUpcomingMovie, fetchLatestMovie, fetchTopPopularMovie } from './movieslice';
-import { fetchPopular, fetchNew } from '../../anime/animeSlice';
+import { fetchPopular, fetchNew, fetchUpcoming } from '../../anime/animeSlice';
 
 type TabtypeMovie = 'new' | 'popular' | 'rated' | 'upcoming'
-type TabtypeAnime = 'airing' | 'top'
+type TabtypeAnime = 'airing' | 'top' | 'upcoming'
 
 
 
@@ -17,7 +17,9 @@ const SectionSingle: FC = () => {
   const anime = useAppSelector(state => state.anime)
   const animePop = useAppSelector(state => state.anime.popular.data)
   const animeNew = useAppSelector(state => state.anime.new.data)
+  const animeUpcoming = useAppSelector(state => state.anime.upcoming.data)
   const appState = useAppSelector(state => state.appState.page)
+
   const [movieTab, setMovieTab] = useState<TabtypeMovie>('new')
   const [animeTab, setAnimeTab] = useState<TabtypeAnime>('airing')
   const [obj, setObj] = useState<any>({
@@ -31,6 +33,14 @@ const SectionSingle: FC = () => {
   const [showMore, setShowMore] = useState<boolean>(false)
   const [pageNum, setPageNum] = useState<number>(1)
   let data = useRef<any>()
+
+  useEffect(()=>{
+    setPageNum(1)
+    appState==='anime'?
+      setAnimeState((prevstate: typeof animeState)=>({ ...prevstate, status: 'idle' })):
+      setObj((prevstate: typeof obj)=>({ ...prevstate, status: 'idle' }));
+    setShowMore(false)
+  }, [appState])
 
   useEffect(
     () => {
@@ -60,23 +70,29 @@ const SectionSingle: FC = () => {
       }
       const toggleAnime: (arg: string, arg2: string) => void = (name, status) => {
         if (name === 'top') {
-          if (status === 'idle') {       
-            dispatch(fetchPopular())
+          if (status === 'idle') {
+            dispatch(fetchPopular(pageNum))
           }
-          setAnimeState((prevstate: typeof obj) => ({ ...prevstate, status: anime.popular.status }))
+          setAnimeState((prevstate: typeof animeState) => ({ ...prevstate, status: anime.popular.status }))
           data.current = animePop
         } else if (name === 'airing') {
           if (status === 'idle') {
-            dispatch(fetchNew())
+            dispatch(fetchNew(pageNum))
           }
-          setAnimeState((prevstate: typeof obj) => ({ ...prevstate, status: anime.new.status }))
+          setAnimeState((prevstate: typeof animeState) => ({ ...prevstate, status: anime.new.status }))
           data.current = animeNew
+        } else if (name === 'upcoming') {
+          if (status === 'idle') {
+            dispatch(fetchUpcoming(pageNum))
+          }
+          setAnimeState((prevstate: typeof animeState) => ({ ...prevstate, status: anime.new.status }))
+          data.current = animeUpcoming
         }
       }
       appState === 'anime' ?
         toggleAnime(animeState.name, animeState.status) :
         toggleMovies(obj.name, obj.status);
-    }, [obj.name, obj.status, dispatch, appState, movie, animePop, animeState.name, animeState.status, animeNew, anime.new.status, anime.popular.status, pageNum]
+    }, [obj.name, obj.status, dispatch, appState, movie, animePop, animeState.name, animeState.status, animeNew, animeUpcoming, anime.new.status, anime.popular.status, pageNum]
   )
   let tabMovieToggle: (arg: TabtypeMovie) => void;
   let tabAnimeToggle: (arg: TabtypeAnime) => void;
@@ -119,17 +135,40 @@ const SectionSingle: FC = () => {
       <h2>
         <ul>{appState === 'anime' ?
           <>
-            <li className="airing" onClick={() => tabAnimeToggle('airing')
+            <li className="airing" onClick={() =>{ tabAnimeToggle('airing')
+            setPageNum(1)
+            }
             }>airing</li>
-            <li className="top" onClick={() => tabAnimeToggle('top')
+            <li className="top" onClick={() => {
+              tabAnimeToggle('top')
+              setPageNum(1)
+            }
             }>top</li>
+            <li className="upcoming" onClick={() => {
+              tabAnimeToggle('upcoming')
+              setPageNum(1)
+            }
+            }>upcoming</li>
           </> :
           <>
-            <li onClick={() => tabMovieToggle('new')
+            <li onClick={() => {
+              tabMovieToggle('new')
+              setPageNum(1)
+            }
             }>New</li>|
-            <li onClick={() => tabMovieToggle('popular')}>Popular</li>|
-            <li onClick={() => tabMovieToggle('rated')}>Top Rated</li>|
-            <li onClick={() => tabMovieToggle('upcoming')}>Upcoming</li>
+            <li onClick={() =>{
+               tabMovieToggle('popular')
+               setPageNum(1)
+              }
+               }>Popular</li>|
+            <li onClick={() => {
+              tabMovieToggle('rated')
+              setPageNum(1)
+              }}>Top Rated</li>|
+            <li onClick={() => {
+              tabMovieToggle('upcoming')
+              setPageNum(1)
+              }}>Upcoming</li>
           </>}
         </ul>
       </h2>
@@ -158,21 +197,30 @@ const SectionSingle: FC = () => {
           <div className="pagination">
             <div onClick={() => {
               if (pageNum === 1) return
-              setObj({ ...obj, status: 'idle' })
+              appState === 'movie' ? setObj({ ...obj, status: 'idle' }) :
+                setAnimeState({ ...animeState, status: 'idle' })
               setPageNum(1)
             }}>&lt; &lt;</div>
             <div>{pageNum}</div>
             <div onClick={() => {
               if (pageNum + 1 > 10) return
-              setObj({ ...obj, status: 'idle' })
+              appState === 'movie' ? setObj({ ...obj, status: 'idle' }) :
+                setAnimeState({ ...animeState, status: 'idle' })
               setPageNum(pageNum + 1)
 
             }}>{pageNum + 1 > 10 ? '' : pageNum + 1}</ div>
             <div onClick={() => {
               if (pageNum + 2 > 10) return
-              setObj({ ...obj, status: 'idle' })
+              appState === 'movie' ? setObj({ ...obj, status: 'idle' }) :
+                setAnimeState({ ...animeState, status: 'idle' })
               setPageNum(pageNum + 2)
             }}>{pageNum + 2 > 10 ? '' : pageNum + 2}</ div>
+            <div onClick={() => {
+              if (pageNum + 1 > 10) return
+              appState === 'movie' ? setObj({ ...obj, status: 'idle' }) :
+                setAnimeState({ ...animeState, status: 'idle' })
+              setPageNum(pageNum + 1)
+            }}>{pageNum + 1 > 10 ? '' : 'next'}</ div>
           </div>}
         <button className='showMoreBtn' style={{ color: 'black' }}
           onClick={() => setShowMore(!showMore)}>{!showMore ? 'show more' : 'show less'}</button>

@@ -9,12 +9,11 @@ import { back, moviePage, reset } from "./popupPageSlice"
 
 
 
-export default memo(function MoviePage({ setInnerModalCheck }: any) {
+export default memo(function MoviePage() {
   const dispatch = useAppDispatch()
   const appState = useAppSelector(state => state.appState.page)
   const moviePageDataArray = useAppSelector(state=>state.pageState.moviePage.history)
 
-  //const [set. setSet] = useState({})
   const {
     title,
     overview,

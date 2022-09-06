@@ -57,7 +57,6 @@ const ListItem = ({
 
 export default memo(function Watchlist() {
   const datas = useAppSelector(state => selectEntities(state.watchlist))
- // const dispatch = useAppDispatch()
   const [modalOpen, setModalOpen] = useState(false)
 
 

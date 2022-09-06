@@ -50,21 +50,29 @@
             height: auto;
           }
           .open {
-            border-radius: 100%;
-            border: 1px solid white;
+            border: 1px solid #ffffff55;
+            background-color: #000000aa;
             width: 18px;
             text-align: center;
             position: absolute;
             cursor: pointer;
+            border-radius: 100%;
             top: 3px;
             right: 3px;
           }
           .addToWL {
+            border-radius: 9px;
             display: grid;
             cursor: pointer;
+            background-color: #000000aa;
             place-items: center;
+            border: 1px solid #ffffff55;
             font-size: 0.7rem;
             padding-bottom: 14px;
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            width: 18px;
           }
         }
       }

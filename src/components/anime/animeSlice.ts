@@ -4,9 +4,9 @@ import {
 } from "@reduxjs/toolkit";
 
 
-export const fetchPopular = createAsyncThunk("anime/popular", async () => {
+export const fetchPopular = createAsyncThunk("anime/popular", async (page:number) => {
   const response = await fetch(
-    `https://api.jikan.moe/v4/top/anime?page=1&filter=bypopularity`
+    `https://api.jikan.moe/v4/top/anime?page=${page}&filter=bypopularity`
   );
   const data = await response.json()
   return data;
@@ -18,8 +18,13 @@ export const fetchAnimeJumb = createAsyncThunk("anime/jum", async () => {
   const data = await response.json()
   return data;
 });
-export const fetchNew = createAsyncThunk("anime/new", async () => {
-  const response = await fetch(`https://api.jikan.moe/v4/top/anime?page=1&type=tv&filter=bypopularity&filter=airing`); 
+export const fetchNew = createAsyncThunk("anime/new", async (page:number) => {
+  const response = await fetch(`https://api.jikan.moe/v4/top/anime?page=${page}&filter=bypopularity&filter=airing`); 
+  const data = await response.json()
+  return data;
+});
+export const fetchUpcoming = createAsyncThunk("anime/upcoming", async (page:number) => {
+  const response = await fetch(`https://api.jikan.moe/v4/top/anime?page=${page}&filter=bypopularity&filter=upcoming`); 
   const data = await response.json()
   return data;
 });
@@ -45,6 +50,10 @@ const animeSlice = createSlice({
       data:{}
     },
     jum: {
+      status: "idle",
+      data:{}
+    },
+    upcoming: {
       status: "idle",
       data:{}
     },
@@ -86,6 +95,18 @@ const animeSlice = createSlice({
       .addCase(fetchAnimeJumb.rejected, (state, action) => {
         state.error = `${action.payload}`;
         state.jum.status = "failed";
+      });
+    builder
+      .addCase(fetchUpcoming.pending, (state, action) => {
+        state.upcoming.status = "loading";
+      })
+      .addCase(fetchUpcoming.fulfilled, (state, action) => {
+        state.upcoming.status = "succeeded";
+        state.upcoming.data = action.payload
+      })
+      .addCase(fetchUpcoming.rejected, (state, action) => {
+        state.error = `${action.payload}`;
+        state.upcoming.status = "failed";
       });
     
   },

@@ -2,6 +2,7 @@ import { FC, memo, useEffect} from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { fetchJumMovie} from "./movieslice"
 import { fetchAnimeJumb } from "../../anime/animeSlice"
+import { moviePage } from "./popupPageSlice"
 
 const Jumbotron: FC = () => {
   const dispatch = useAppDispatch()
@@ -10,12 +11,13 @@ const Jumbotron: FC = () => {
   const appState:string = useAppSelector(state=>state.appState.page)
   const anime:any = useAppSelector((state)=>state.anime.jum.data)
   const animeStatus:string = useAppSelector(state=>state.anime.jum.status)
+
   const num = Math.floor(Math.random()*20)
 
   let data = appState==='movie'?movie:anime.data
-  console.log(data)
+  
   let status = appState==='movie'?movieStatus:animeStatus
-  console.log(status)
+  
   useEffect(
     () => {
       if (status === 'idle')

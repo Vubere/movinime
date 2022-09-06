@@ -24,7 +24,6 @@ export default function Poster({
   const appState = useAppSelector(state => state.appState.page)
   const dispatch = useAppDispatch() 
 
-  const clickedPoster = useRef<any>()
   const movieData = {
     title,
     id,
@@ -41,7 +40,7 @@ export default function Poster({
   poster_path;
 
   return (
-    <div className="poster" ref={clickedPoster} >
+    <div className="poster" >
       <img alt={`${title} imgposter`}
         src={url} />
       <div className="open" onClick={() => {

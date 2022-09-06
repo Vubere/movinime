@@ -20,8 +20,7 @@ export default function Navbar() {
     <header>
       <div className="top">
         <div className="left">
-          <span className="hamburger" onClick={(e) => {
-            e.preventDefault()
+          <span className="hamburger" onClick={() => {
             if (pages.current !== null) {
               pages.current.style.display =
                 pages.current.style.display === 'flex' ? 'none' : 'flex';
@@ -50,7 +49,7 @@ export default function Navbar() {
           }}></button>
         </form>
       </div>
-      <div className="pages" ref={pages} onBlur={() => {
+      <div className="pages" ref={pages} onBlur={(e) => {
         if (pages.current !== null)
           pages.current.style.display = 'none'
       }}>
