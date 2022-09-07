@@ -2,41 +2,63 @@
     padding: 10px;
     width: 100vw;
     position: relative;
+   
     h2 {
       text-align: center;
       font-size: 1.2rem;
       margin-bottom: 5px;
-      width: 100%;
+      width: 100vw;
       height: 30px;
       position: sticky;
       position: -webkit-sticky;
       z-index: 399;
       top: 33px;
-      display: grid;
-      place-items: center;
       background-color: rgba(3, 3, 17, 0.444);
-      ul > li {
+      ul{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100vw;
+        li.active{
+          background-color: #ffffff44;
+          transform: scale(1.05, 1.05);
+        }
+        li {
         color: #ffffff82;
         transition: 0.5s;
+        border: 1px solid white;
+        padding: 5px;
+        width: 20%;
+        border-radius: 10px;
         &:hover{
           transform: scale(1.14,1.14);
           background-color: #ffffff55;
         }
       }
     }
+    }
     .container {
       width: 100%;
       position: relative;
       display: flex;
       flex-direction: column;
+      overflow: auto;
       align-items: center;
       .moviesContainer {
-        display: grid;
+      /*   display: grid;
         grid-template-columns: 23% 23% 23% 23%;
         gap: 2%;
-        overflow: hidden;
+        overflow: hidden; */
+        display: flex;
+        flex-direction: row;
+        overflow: auto;
+        width: 100vw;
+        padding: 5px;
+       
         .poster {
-          width: 100%;
+          width: 150px;
+          height: 220px;
+          min-width: 150px;
           margin: 5px;
           border: none;
           border-radius: 10px;
@@ -45,7 +67,7 @@
           backdrop-filter: blur;
           box-shadow: -1px -2px #ffffff77, 3px 4px #000000;
           img {
-            width: 100%;
+            width: 150px;
             border-radius: 10px;
             height: auto;
           }

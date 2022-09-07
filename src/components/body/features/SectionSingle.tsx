@@ -135,37 +135,41 @@ const SectionSingle: FC = () => {
       <h2>
         <ul>{appState === 'anime' ?
           <>
-            <li className="airing" onClick={() =>{ tabAnimeToggle('airing')
+            <li className={`${animeTab==='airing'?'active':''}`} onClick={() =>{ tabAnimeToggle('airing')
             setPageNum(1)
             }
             }>airing</li>
-            <li className="top" onClick={() => {
+            <li className={`${animeTab === 'top' ? 'active' : ''}`} onClick={() => {
               tabAnimeToggle('top')
               setPageNum(1)
             }
             }>top</li>
-            <li className="upcoming" onClick={() => {
+            <li className={`${animeTab === 'upcoming' ? 'active' : ''}`} onClick={() => {
               tabAnimeToggle('upcoming')
               setPageNum(1)
             }
             }>upcoming</li>
           </> :
           <>
-            <li onClick={() => {
+            <li className={`${movieTab === 'new' ? 'active' : ''}`}
+            onClick={() => {
               tabMovieToggle('new')
               setPageNum(1)
             }
-            }>New</li>|
-            <li onClick={() =>{
+            }>New</li>
+            <li className={`${movieTab==='popular'?'active':''}`}
+            onClick={() =>{
                tabMovieToggle('popular')
                setPageNum(1)
               }
-               }>Popular</li>|
-            <li onClick={() => {
+               }>Popular</li>
+            <li className={`top ${movieTab === 'rated' ? 'active' : ''}`}
+            onClick={() => {
               tabMovieToggle('rated')
               setPageNum(1)
-              }}>Top Rated</li>|
-            <li onClick={() => {
+              }}>Top Rated</li>
+            <li className={`upcoming ${movieTab === 'upcoming' ? 'active' : ''}`}
+            onClick={() => {
               tabMovieToggle('upcoming')
               setPageNum(1)
               }}>Upcoming</li>
