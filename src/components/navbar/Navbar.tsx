@@ -25,7 +25,7 @@ export default function Navbar() {
               pages.current.style.display =
                 pages.current.style.display === 'flex' ? 'none' : 'flex';
             }
-          }}>
+          }} role='button'>
             <div></div>
             <div></div>
             <div></div>

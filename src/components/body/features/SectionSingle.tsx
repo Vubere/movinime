@@ -1,6 +1,6 @@
 
-import MoviePoster from './Poster';
-import { FC, memo, useEffect, useRef, useState } from "react"
+//import MoviePoster from './Poster';
+import { FC, lazy, memo, Suspense, useEffect, useRef, useState } from "react"
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { fetchTopRatedMovie, fetchUpcomingMovie, fetchLatestMovie, fetchTopPopularMovie } from './movieslice';
 import { fetchPopular, fetchNew, fetchUpcoming } from '../../anime/animeSlice';
@@ -8,6 +8,7 @@ import { fetchPopular, fetchNew, fetchUpcoming } from '../../anime/animeSlice';
 type TabtypeMovie = 'new' | 'popular' | 'rated' | 'upcoming'
 type TabtypeAnime = 'airing' | 'top' | 'upcoming'
 
+const MoviePoster = lazy(()=>import('./Poster'))
 
 
 
@@ -179,10 +180,13 @@ const SectionSingle: FC = () => {
       <div className="container">
         <div className="moviesContainer">
           {appState === 'movie' ? arr.slice(0, num).map((data, i) => {
-            return <MoviePoster key={data.id} {...data} />
+            return <Suspense fallback={<div>...</div>}>
+                  <MoviePoster key={data.id} {...data} />
+              </Suspense>
           }) :
             arr.slice(0, num).map((data) => {
-              return <MoviePoster key={data.mal_id}
+              return (<Suspense fallback={<div>...</div>}>
+                <MoviePoster key={data.mal_id}
                 title={data.title}
                 poster_path={data.images.jpg.image_url}
                 overview={data.synopsis}
@@ -194,6 +198,7 @@ const SectionSingle: FC = () => {
                 popularity={data.popularity}
                 vote_average={data.score}
               />
+             </Suspense>)
             })
           }
         </div>
