@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type pageOptions = {page:'movie'|'anime'}
 const initialState:pageOptions = {
-  page: 'anime'
+  page: 'movie'
 }
 const appSlice = createSlice({
   name: 'App',
