@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { StateT } from "../../../Type";
+import { StateT } from "../../../app/Type";
 
 type iS = {
   [key: string]: {

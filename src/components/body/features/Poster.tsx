@@ -1,6 +1,6 @@
 
 import { useAppDispatch, useAppSelector} from "../../../app/hooks"
-import { StateT } from "../../../Type"
+import { StateT } from "../../../app/Type"
 import { addItem } from "../../navbar/watchlistslice"
 import { moviePage, similarPage } from "./popupPageSlice"
 

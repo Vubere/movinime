@@ -1,7 +1,7 @@
 import { FC, memo, useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { fetchJumMovie } from "./movieslice"
-import { fetchAnimeJumb } from "../../anime/animeSlice"
+import { fetchJumMovie } from "./apiSlice/movieslice"
+import { fetchAnimeJumb } from "./apiSlice/animeSlice"
 
 
 const Jumbotron: FC = () => {

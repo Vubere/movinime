@@ -1,7 +1,7 @@
-import { StateT } from "../../../Type"
+import { StateT } from "../../../app/Type"
 import { useRef, useState, useEffect, memo } from "react"
 import { useAppSelector, useAppDispatch } from "../../../app/hooks"
-import { fetchSimilarMovie } from "./movieslice"
+import { fetchSimilarMovie } from "./apiSlice/movieslice"
 import Poster from "./Poster"
 import { similarPage } from "./popupPageSlice"
 

@@ -1,5 +1,5 @@
 import {createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { StateT } from "../../Type";
+import { StateT } from "../../app/Type";
 
 
 const movieAdapter = createEntityAdapter<StateT>()

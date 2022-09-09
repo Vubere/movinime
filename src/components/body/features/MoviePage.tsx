@@ -2,7 +2,7 @@ import { memo} from "react"
 import { useAppDispatch, useAppSelector} from "../../../app/hooks"
 import SimilarMovies from "./SimilarMovies"
 import { addItem } from "../../navbar/watchlistslice"
-import { StateT } from "../../../Type"
+import { StateT } from "../../../app/Type"
 import { back, moviePage, reset } from "./popupPageSlice"
 
 

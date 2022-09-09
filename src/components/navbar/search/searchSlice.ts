@@ -3,7 +3,7 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import { StateT } from "../../../Type";
+import { StateT } from "../../../app/Type";
 import { Api_key } from "../../../app/apikey";
 
 interface fsmParamType {

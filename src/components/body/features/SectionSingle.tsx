@@ -2,8 +2,8 @@
 //import MoviePoster from './Poster';
 import { FC, lazy, memo, Suspense, useEffect, useRef, useState } from "react"
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { fetchTopRatedMovie, fetchUpcomingMovie, fetchLatestMovie, fetchTopPopularMovie } from './movieslice';
-import { fetchPopular, fetchNew, fetchUpcoming } from '../../anime/animeSlice';
+import { fetchTopRatedMovie, fetchUpcomingMovie, fetchLatestMovie, fetchTopPopularMovie } from './apiSlice/movieslice';
+import { fetchPopular, fetchNew, fetchUpcoming } from './apiSlice/animeSlice';
 
 type TabtypeMovie = 'new' | 'popular' | 'rated' | 'upcoming'
 type TabtypeAnime = 'airing' | 'top' | 'upcoming'
@@ -86,14 +86,14 @@ const SectionSingle: FC = () => {
           if (status === 'idle') {
             dispatch(fetchUpcoming(pageNum))
           }
-          setAnimeState((prevstate: typeof animeState) => ({ ...prevstate, status: anime.new.status }))
+          setAnimeState((prevstate: typeof animeState) => ({ ...prevstate, status: anime.upcoming.status }))
           data.current = animeUpcoming
         }
       }
       appState === 'anime' ?
         toggleAnime(animeState.name, animeState.status) :
         toggleMovies(obj.name, obj.status);
-    }, [obj.name, obj.status, dispatch, appState, movie, animePop, animeState.name, animeState.status, animeNew, animeUpcoming, anime.new.status, anime.popular.status, pageNum]
+    }, [obj.name, obj.status, dispatch, appState, movie, animePop, animeState.name, animeState.status, animeNew, animeUpcoming, anime.new.status, anime.popular.status, pageNum, anime.upcoming.status]
   )
   let tabMovieToggle: (arg: TabtypeMovie) => void;
   let tabAnimeToggle: (arg: TabtypeAnime) => void;
@@ -137,44 +137,45 @@ const SectionSingle: FC = () => {
         <ul>{appState === 'anime' ?
           <>
             <li className={`${animeTab === 'airing' ? 'active' : ''}`} onClick={() => {
+              setPageNum(1)
               tabAnimeToggle('airing')
-              setPageNum(1)
             }
-            }>airing</li>
+            }>Airing</li>
             <li className={`${animeTab === 'top' ? 'active' : ''}`} onClick={() => {
+              setPageNum(1)
               tabAnimeToggle('top')
-              setPageNum(1)
             }
-            }>top</li>
+            }>Top</li>
             <li className={`${animeTab === 'upcoming' ? 'active' : ''}`} onClick={() => {
-              tabAnimeToggle('upcoming')
               setPageNum(1)
+              tabAnimeToggle('upcoming')
             }
-            }>upcoming</li>
+            }>Upcoming</li>
           </> :
           <>
             <li className={`${movieTab === 'new' ? 'active' : ''}`}
               onClick={() => {
-                tabMovieToggle('new')
                 setPageNum(1)
+                tabMovieToggle('new')
               }
               }>New</li>
             <li className={`${movieTab === 'popular' ? 'active' : ''}`}
               onClick={() => {
-                tabMovieToggle('popular')
                 setPageNum(1)
+                tabMovieToggle('popular')
               }
               }>Popular</li>
             <li className={`top ${movieTab === 'rated' ? 'active' : ''}`}
               onClick={() => {
-                tabMovieToggle('rated')
                 setPageNum(1)
-              }}>Top Rated</li>
+                tabMovieToggle('rated')
+              }}>Top</li>
             <li className={`upcoming ${movieTab === 'upcoming' ? 'active' : ''}`}
               onClick={() => {
-                tabMovieToggle('upcoming')
                 setPageNum(1)
-              }}>Upcoming</li>
+                tabMovieToggle('upcoming')
+              }}>Random
+            </li>
           </>}
         </ul>
       </h2>
@@ -234,7 +235,7 @@ const SectionSingle: FC = () => {
               appState === 'movie' ? setObj({ ...obj, status: 'idle' }) :
                 setAnimeState({ ...animeState, status: 'idle' })
               setPageNum(pageNum + 2)
-            }}>{pageNum + 2 > 10 ? '' : pageNum + 2}</ div>
+            }}>{pageNum + 2 > 10 ? '' : pageNum + 2}</ div> 
             <div onClick={() => {
               if (pageNum + 1 > 10) return
               appState === 'movie' ? setObj({ ...obj, status: 'idle' }) :

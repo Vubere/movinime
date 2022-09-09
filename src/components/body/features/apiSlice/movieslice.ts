@@ -3,8 +3,8 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import { Api_key } from "../../../app/apikey";
-import { StateT } from "../../../Type";
+import { Api_key } from "../../../../app/apikey";
+import { StateT } from "../../../../app/Type";
 
 type similarMovieArgType = {
   page: number;

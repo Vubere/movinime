@@ -1,7 +1,7 @@
 import { FC, lazy, Suspense } from 'react';
 import './stylesheets/App.scss';
 import Navbar from './components/navbar/Navbar';
-import Footer from './components/body/footer/Footer';
+import Footer from './components/footer/Footer';
 import MoviePage from './components/body/features/MoviePage';
 import { useAppSelector } from './app/hooks';
 

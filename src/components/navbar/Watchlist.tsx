@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { memo, useState} from "react"
-import { StateT } from "../../Type"
+import { StateT } from "../../app/Type"
 import { removeItem, selectEntities } from "./watchlistslice"
 
 
@@ -42,12 +42,14 @@ const ListItem = ({
         </div>
       </div>
       <div className="completion">
-        <span className="remove" onClick={() => {
+        <span className="remove" style={{
+          border: '1px solid #fff7',
+          borderRadius: '3px',
+          padding: '2px',
+          margin: '5px'
+        }}onClick={() => {
           dispatch(removeItem(id))
         }}>remove</span>
-        <span className="complete" onClick={() => {
-          dispatch(removeItem(id))
-        }}>watched</span>
       </div>
     </div>
   )
@@ -57,6 +59,7 @@ const ListItem = ({
 
 export default memo(function Watchlist() {
   const datas = useAppSelector(state => selectEntities(state.watchlist))
+ // const dispatch = useAppDispatch()
   const [modalOpen, setModalOpen] = useState(false)
 
 
