@@ -213,7 +213,15 @@ const SectionSingle: FC = () => {
                 setAnimeState({ ...animeState, status: 'idle' })
               setPageNum(1)
             }}>&lt; &lt;</div>
-            <div>{pageNum}</div>
+            <div style={{
+              scale: 0.6,
+              backgroundColor: '#fff7',
+              padding: '0',
+              paddingLeft: '3px',
+              paddingRight: '3px',
+              borderRadius: '2px',
+              margin: '1px',
+            }}>{pageNum}</div>
             <div onClick={() => {
               if (pageNum + 1 > 10) return
               appState === 'movie' ? setObj({ ...obj, status: 'idle' }) :

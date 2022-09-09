@@ -18,9 +18,13 @@
   flex-wrap: wrap;
   z-index: 800;
   position: fixed;
+  padding-top: 25px;
   top: 33px;
   display: grid;
   grid-template-columns: 33% 33% 33%;
+  .close{
+    z-index: inherit;
+  }
   .searchPosterContainer {
     margin: 5px;
     .poster {
@@ -55,6 +59,9 @@
         font-size: 0.7rem;
         padding-bottom: 14px;
       }
+    }
+    h4{
+      font-size: 0.7em;
     }
   }
 }
