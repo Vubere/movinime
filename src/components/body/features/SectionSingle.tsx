@@ -8,7 +8,7 @@ import { fetchPopular, fetchNew, fetchUpcoming } from '../../anime/animeSlice';
 type TabtypeMovie = 'new' | 'popular' | 'rated' | 'upcoming'
 type TabtypeAnime = 'airing' | 'top' | 'upcoming'
 
-const MoviePoster = lazy(()=>import('./Poster'))
+const MoviePoster = lazy(() => import('./Poster'))
 
 
 
@@ -35,11 +35,11 @@ const SectionSingle: FC = () => {
   const [pageNum, setPageNum] = useState<number>(1)
   let data = useRef<any>()
 
-  useEffect(()=>{
+  useEffect(() => {
     setPageNum(1)
-    appState==='anime'?
-      setAnimeState((prevstate: typeof animeState)=>({ ...prevstate, status: 'idle' })):
-      setObj((prevstate: typeof obj)=>({ ...prevstate, status: 'idle' }));
+    appState === 'anime' ?
+      setAnimeState((prevstate: typeof animeState) => ({ ...prevstate, status: 'idle' })) :
+      setObj((prevstate: typeof obj) => ({ ...prevstate, status: 'idle' }));
     setShowMore(false)
   }, [appState])
 
@@ -136,8 +136,9 @@ const SectionSingle: FC = () => {
       <h2>
         <ul>{appState === 'anime' ?
           <>
-            <li className={`${animeTab==='airing'?'active':''}`} onClick={() =>{ tabAnimeToggle('airing')
-            setPageNum(1)
+            <li className={`${animeTab === 'airing' ? 'active' : ''}`} onClick={() => {
+              tabAnimeToggle('airing')
+              setPageNum(1)
             }
             }>airing</li>
             <li className={`${animeTab === 'top' ? 'active' : ''}`} onClick={() => {
@@ -153,53 +154,55 @@ const SectionSingle: FC = () => {
           </> :
           <>
             <li className={`${movieTab === 'new' ? 'active' : ''}`}
-            onClick={() => {
-              tabMovieToggle('new')
-              setPageNum(1)
-            }
-            }>New</li>
-            <li className={`${movieTab==='popular'?'active':''}`}
-            onClick={() =>{
-               tabMovieToggle('popular')
-               setPageNum(1)
+              onClick={() => {
+                tabMovieToggle('new')
+                setPageNum(1)
               }
-               }>Popular</li>
+              }>New</li>
+            <li className={`${movieTab === 'popular' ? 'active' : ''}`}
+              onClick={() => {
+                tabMovieToggle('popular')
+                setPageNum(1)
+              }
+              }>Popular</li>
             <li className={`top ${movieTab === 'rated' ? 'active' : ''}`}
-            onClick={() => {
-              tabMovieToggle('rated')
-              setPageNum(1)
-              }}>Top</li>
+              onClick={() => {
+                tabMovieToggle('rated')
+                setPageNum(1)
+              }}>Top Rated</li>
             <li className={`upcoming ${movieTab === 'upcoming' ? 'active' : ''}`}
-            onClick={() => {
-              tabMovieToggle('upcoming')
-              setPageNum(1)
+              onClick={() => {
+                tabMovieToggle('upcoming')
+                setPageNum(1)
               }}>Upcoming</li>
           </>}
         </ul>
       </h2>
       <div className="container">
         <div className="moviesContainer">
-          {appState === 'movie' ? arr.slice(0, num).map((data, i) => {
-            return <Suspense fallback={<div>...</div>}>
-                  <MoviePoster key={data.id} {...data} />
-              </Suspense>
-          }) :
-            arr.slice(0, num).map((data) => {
-              return (<Suspense fallback={<div className='poster'>loading...</div>}>
-                <MoviePoster key={data.mal_id}
-                title={data.title}
-                poster_path={data.images.jpg.image_url}
-                overview={data.synopsis}
-                status={data.status}
-                id={data.mal_id}
-                original_language={['ja']}
-                release_date={data.year}
-                episodeLength={data.episodes}
-                popularity={data.popularity}
-                vote_average={data.score}
-              />
-             </Suspense>)
-            })
+          {appState === 'movie' ?
+            <Suspense fallback={<div>loading...</div>}>
+              {arr.slice(0, num).map((data, i) => <MoviePoster key={data.id} {...data} />
+              )}
+            </Suspense> :
+            <Suspense fallback={<div className='poster'>loading...</div>}>
+              {arr.slice(0, num).map((data) => {
+                return (
+                  <MoviePoster key={data.mal_id}
+                    title={data.title}
+                    poster_path={data.images.jpg.image_url}
+                    overview={data.synopsis}
+                    status={data.status}
+                    id={data.mal_id}
+                    original_language={['ja']}
+                    release_date={data.year}
+                    episodeLength={data.episodes}
+                    popularity={data.popularity}
+                    vote_average={data.score}
+                  />
+                )
+              })}
+            </Suspense>
           }
         </div>
         {!showMore ? '' :
