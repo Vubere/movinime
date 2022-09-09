@@ -44,8 +44,10 @@
       .img {
         grid-area: 1/1/2/2;
         position: relative;
+        max-width: 250px;
         img {
           width: 90%;
+          max-width: 250px;
           border-radius: 8px;
           margin: 10px;
         }
@@ -104,9 +106,11 @@
         grid-template-rows: 200px;
         padding-right: 28px;
         width: 100vw;
+        place-items: center;
         margin: 5px;
         .simMovBtn{
           width: 100%;
+          max-width: 600px;
           height: 50px;
           background-color: #fff3;
           padding: 5px;

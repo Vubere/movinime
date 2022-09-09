@@ -32,12 +32,11 @@
   position: fixed;
   top: 33px;
   .empty{
-    position: absolute;
-    top: 50%;
-    right: 50%;
+    width: 100vw;
     @include otherFonts;
-    font-size: 2em;
-    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 30%;
+    right: -40%;
   }
   .listItemContainer {
     display: flex;
@@ -65,6 +64,9 @@
       }
       .movieDetails{
         padding: 8px;
+        overflow: auto;
+        color: white;
+        max-height: 30vh;
         ul{
           li.title{
             @include titleFont;

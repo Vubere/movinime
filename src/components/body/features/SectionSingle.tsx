@@ -168,7 +168,7 @@ const SectionSingle: FC = () => {
             onClick={() => {
               tabMovieToggle('rated')
               setPageNum(1)
-              }}>Top Rated</li>
+              }}>Top</li>
             <li className={`upcoming ${movieTab === 'upcoming' ? 'active' : ''}`}
             onClick={() => {
               tabMovieToggle('upcoming')
@@ -185,7 +185,7 @@ const SectionSingle: FC = () => {
               </Suspense>
           }) :
             arr.slice(0, num).map((data) => {
-              return (<Suspense fallback={<div>...</div>}>
+              return (<Suspense fallback={<div className='poster'>loading...</div>}>
                 <MoviePoster key={data.mal_id}
                 title={data.title}
                 poster_path={data.images.jpg.image_url}
