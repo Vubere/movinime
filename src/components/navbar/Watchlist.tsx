@@ -1,22 +1,26 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { memo, useState} from "react"
+import { memo, useEffect, useState} from "react"
 import { StateT } from "../../app/Type"
-import { removeItem, selectEntities } from "./watchlistslice"
+import { addAll, removeItem, selectEntities } from "./watchlistslice"
 
 
 
 const ListItem = ({
-  title,
-  id,
-  overview,
-  original_language,
-  release_date,
-  status,
-  poster_path,
-  vote_average
-}: StateT) => {
+  details,
+  idm,
+  watched
+}:{details:StateT, idm:number, watched:boolean}) => {
   const dispatch = useAppDispatch()
   const appState = useAppSelector(state => state.appState.page)
+
+  const {title,
+    id,
+    overview,
+    original_language,
+    release_date,
+    status,
+    poster_path,
+    vote_average} = details
 
   let url = appState === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}` :
     poster_path;
@@ -59,13 +63,22 @@ const ListItem = ({
 
 export default memo(function Watchlist() {
   const datas = useAppSelector(state => selectEntities(state.watchlist))
- // const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
   const [modalOpen, setModalOpen] = useState(false)
+  let arr:any[] = []
 
+  useEffect(()=>{
+    if(localStorage.getItem('watchList')){
+      let data = JSON.parse(localStorage.getItem('watchList') as string)
+      for (let key in data) {
+        arr.push(data[key] as any)
+      }
+      dispatch(addAll(data))
+    }
+  }, [dispatch])
 
-  let arr = [] as StateT[]
   for (let key in datas) {
-    arr.push(datas[key] as StateT)
+    arr.push(datas[key] as any)
   }
   return (
     <>
@@ -86,7 +99,7 @@ export default memo(function Watchlist() {
               <div className="empty">
                 Nothing here...
               </div>
-              :arr.map((data: StateT) => <ListItem
+              :arr.map((data) => <ListItem
                 key={data.id} {...data} />
               )}
             </div>

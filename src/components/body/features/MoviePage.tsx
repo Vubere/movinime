@@ -1,7 +1,7 @@
 import { memo} from "react"
 import { useAppDispatch, useAppSelector} from "../../../app/hooks"
 import SimilarMovies from "./SimilarMovies"
-import { addItem } from "../../navbar/watchlistslice"
+import { addItem, putInLS } from "../../navbar/watchlistslice"
 import { StateT } from "../../../app/Type"
 import { back, moviePage, reset } from "./popupPageSlice"
 
@@ -47,17 +47,36 @@ export default memo(function MoviePage() {
             <div className="img" >
               <div className="addToWL" 
                onClick={() => {
-                dispatch(addItem({
-                  title,
-                  id,
-                  overview,
-                  original_language,
-                  release_date,
-                  status,
-                  poster_path,
-                  popularity,
-                  vote_average
-                }))
+                 dispatch(addItem({
+                   details: {
+                     title,
+                     id,
+                     overview,
+                     original_language,
+                     release_date,
+                     status,
+                     poster_path,
+                     popularity,
+                     vote_average
+                   },
+                   watched: false,
+                   id: id
+                 }))
+                 dispatch(putInLS({
+                   details: {
+                     title,
+                     id,
+                     overview,
+                     original_language,
+                     release_date,
+                     status,
+                     poster_path,
+                     popularity,
+                     vote_average
+                   },
+                   watched: false,
+                   id: id
+                 }))
               }}>
                 +
               </div>

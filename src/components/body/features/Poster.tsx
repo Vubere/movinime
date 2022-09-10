@@ -1,7 +1,7 @@
 
-import { useAppDispatch, useAppSelector} from "../../../app/hooks"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { StateT } from "../../../app/Type"
-import { addItem } from "../../navbar/watchlistslice"
+import { addItem, putInLS } from "../../navbar/watchlistslice"
 import { moviePage, similarPage } from "./popupPageSlice"
 
 type extra = {
@@ -19,10 +19,10 @@ export default function Poster({
   popularity,
   vote_average,
   type
-}: StateT&extra) {
+}: StateT & extra) {
 
   const appState = useAppSelector(state => state.appState.page)
-  const dispatch = useAppDispatch() 
+  const dispatch = useAppDispatch()
 
   const movieData = {
     title,
@@ -36,17 +36,17 @@ export default function Poster({
     vote_average
   }
 
-  let url = appState === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}`:
-  poster_path;
+  let url = appState === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}` :
+    poster_path;
 
   return (
     <div className="poster" >
       <img alt={`${title} imgposter`}
         src={url} />
       <div className="open" onClick={() => {
-        dispatch(moviePage({open:true, data:movieData}))
-        if(type!==undefined){
-          if(type==='simMov'){
+        dispatch(moviePage({ open: true, data: movieData }))
+        if (type !== undefined) {
+          if (type === 'simMov') {
             dispatch(similarPage(false))
           }
         }
@@ -55,15 +55,34 @@ export default function Poster({
       </div>
       <div className="addToWL" onClick={() => {
         dispatch(addItem({
-          title,
-          id,
-          overview,
-          original_language,
-          release_date,
-          status,
-          poster_path,
-          popularity,
-          vote_average
+          details: {
+            title,
+            id,
+            overview,
+            original_language,
+            release_date,
+            status,
+            poster_path,
+            popularity,
+            vote_average
+          },
+          watched: false,
+          id: id
+        }))
+        dispatch(putInLS({
+          details: {
+            title,
+            id,
+            overview,
+            original_language,
+            release_date,
+            status,
+            poster_path,
+            popularity,
+            vote_average
+          },
+          watched: false,
+          id: id
         }))
       }}>
         +
