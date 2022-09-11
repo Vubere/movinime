@@ -1,34 +1,34 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { memo, useEffect, useState} from "react"
+import { memo, useEffect, useState } from "react"
 import { StateT } from "../../app/Type"
-import { addAll, removeItem, selectEntities } from "./watchlistslice"
+import { addItem, addLsKeys, removeItem, selectEntities, complete } from "./watchlistslice"
 
 
 
 const ListItem = ({
   details,
-  idm,
+  id,
   watched
-}:{details:StateT, idm:number, watched:boolean}) => {
+}: { details: StateT, id: number, watched: boolean }) => {
   const dispatch = useAppDispatch()
-  const appState = useAppSelector(state => state.appState.page)
 
-  const {title,
-    id,
+  const { title,
     overview,
     original_language,
     release_date,
     status,
     poster_path,
-    vote_average} = details
+    vote_average,
+    typeOfData } = details
 
-  let url = appState === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}` :
+  let url = typeOfData === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}` :
     poster_path;
 
 
 
   return (
-    <div className="listItemContainer">
+    <div className={`listItemContainer ${watched ? 'watched' : ''}`}>
+      {watched?<div className='watchedPopup'>WATCHED</div>:''}
       <div className="watchListMovieDetails">
         <div className="img" >
           <img alt={`${title} movie poster`} src={url} />
@@ -39,7 +39,7 @@ const ListItem = ({
               {title}</li>
             <li className="detailOverview">{overview}</li>
             <li className="releaseStatus">status:<br />{status ? status : 'N/A'}</li>
-            <li className="releaseDate">Release Date:<br />{release_date}</li>
+            <li className="releaseDate">Release Date:<br />{release_date ? release_date : 'N/A'}</li>
             <li className="lang">Language:<br />{original_language ? original_language : 'N/A'} </li>
             <li className="rating">rating:<br />{vote_average ? `${Math.round(vote_average * 10)}%` : 'N/A'} </li>
           </ul>
@@ -51,9 +51,17 @@ const ListItem = ({
           borderRadius: '3px',
           padding: '2px',
           margin: '5px'
-        }}onClick={() => {
+        }} onClick={() => {
           dispatch(removeItem(id))
         }}>remove</span>
+        <span className="complete" style={{
+          border: '1px solid #fff7',
+          borderRadius: '3px',
+          padding: '2px',
+          margin: '5px'
+        }} onClick={() => {
+          dispatch(complete({ details, watched: !watched, id: id}))
+        }}>complete</span>
       </div>
     </div>
   )
@@ -65,15 +73,18 @@ export default memo(function Watchlist() {
   const datas = useAppSelector(state => selectEntities(state.watchlist))
   const dispatch = useAppDispatch()
   const [modalOpen, setModalOpen] = useState(false)
-  let arr:any[] = []
+  let arr: any[] = []
 
-  useEffect(()=>{
-    if(localStorage.getItem('watchList')){
-      let data = JSON.parse(localStorage.getItem('watchList') as string)
-      for (let key in data) {
-        arr.push(data[key] as any)
+  useEffect(() => {
+    if (localStorage.getItem('keys')) {
+      let keys = JSON.parse(localStorage.getItem('keys') as string)
+      let temp
+      for (let key in keys) {
+        temp = JSON.parse(localStorage.getItem(`${keys[key]}`) as string)
+        arr.push(temp)
+        dispatch(addLsKeys(temp.id))
+        dispatch(addItem(temp))
       }
-      dispatch(addAll(data))
     }
   }, [dispatch])
 
@@ -95,13 +106,13 @@ export default memo(function Watchlist() {
               <div className="close" onClick={() => {
                 setModalOpen(false)
               }}>x</div>
-              {arr.length===0?
-              <div className="empty">
-                Nothing here...
-              </div>
-              :arr.map((data) => <ListItem
-                key={data.id} {...data} />
-              )}
+              {arr.length === 0 ?
+                <div className="empty">
+                  Nothing here...
+                </div>
+                : arr.map((data) => <ListItem
+                  key={data.id} {...data} />
+                )}
             </div>
           </>)
       }

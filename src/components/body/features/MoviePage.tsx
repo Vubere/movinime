@@ -11,7 +11,6 @@ import { back, moviePage, reset } from "./popupPageSlice"
 
 export default memo(function MoviePage() {
   const dispatch = useAppDispatch()
-  const appState = useAppSelector(state => state.appState.page)
   const moviePageDataArray = useAppSelector(state=>state.pageState.moviePage.history)
 
   const {
@@ -23,10 +22,11 @@ export default memo(function MoviePage() {
     poster_path,
     id,
     popularity,
-    vote_average
+    vote_average,
+    typeOfData
   }:StateT = moviePageDataArray[moviePageDataArray.length-1]
 
-  let url = appState === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}` :
+  let url = typeOfData === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}` :
     poster_path;
   
   return (
@@ -57,7 +57,8 @@ export default memo(function MoviePage() {
                      status,
                      poster_path,
                      popularity,
-                     vote_average
+                     vote_average,
+                     typeOfData
                    },
                    watched: false,
                    id: id
@@ -72,7 +73,8 @@ export default memo(function MoviePage() {
                      status,
                      poster_path,
                      popularity,
-                     vote_average
+                     vote_average,
+                     typeOfData
                    },
                    watched: false,
                    id: id
@@ -94,7 +96,7 @@ export default memo(function MoviePage() {
             </div>
             <div className="movieCast"></div>
             {
-              appState==='movie'?
+              typeOfData==='movie'?
               <SimilarMovies title={title} movieId={id} />:''
             }
           </div>

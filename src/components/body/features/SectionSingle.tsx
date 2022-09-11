@@ -183,7 +183,14 @@ const SectionSingle: FC = () => {
         <div className="moviesContainer">
           {appState === 'movie' ?
             <Suspense fallback={<div>loading...</div>}>
-              {arr.slice(0, num).map((data, i) => <MoviePoster key={data.id} {...data} />
+              {arr.slice(0, num).map((data, i) => {
+                let details = {
+                  ...data,
+                  typeOfData: 'movie'
+                }
+
+              return <MoviePoster key={data.id} {...details} />
+            }
               )}
             </Suspense> :
             <Suspense fallback={<div className='poster'>loading...</div>}>
@@ -200,6 +207,7 @@ const SectionSingle: FC = () => {
                     episodeLength={data.episodes}
                     popularity={data.popularity}
                     vote_average={data.score}
+                    typeOfData='anime'
                   />
                 )
               })}

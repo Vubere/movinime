@@ -11,6 +11,7 @@ export type StateT = {
   popularity: number;
   vote_average: number;
   episodeLength?: number;
+  typeOfData: 'movie'|'anime';
 }
 
 export  type Site = 'movie'|'anime'

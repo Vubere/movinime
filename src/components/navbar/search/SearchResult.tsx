@@ -24,13 +24,19 @@ export default memo(
                 <div className="close" onClick={() => {
                   setModalOpen(false)
                 }}>x</div>
-                {appState==='movie'? arr.map((data:any) => (
-                  <div className="searchPosterContainer" key={data.id}>
+                {appState==='movie'? arr.map((data:any) => {
+
+                  let details = {
+                    ...data,
+                    typeOfData: appState
+                  }
+
+                  return (<div className="searchPosterContainer" key={data.id}>
                     <div>
-                      <Poster {...data} />
+                      <Poster {...details} />
                       <h4>{data.title}</h4>
                     </div>
-                  </div>)):
+                  </div>)}):
                 arr.map((data:any) => (
                   <div className="searchPosterContainer" key={data.mal_id}>
                     <div>
@@ -45,6 +51,7 @@ export default memo(
                         episodeLength={data.episodes}
                         popularity={data.popularity}
                         vote_average={data.score}
+                        typeOfData={appState}
                       />}
                       <h4>{data.title}</h4>
                     </div>

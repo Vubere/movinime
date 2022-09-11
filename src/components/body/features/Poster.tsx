@@ -18,6 +18,7 @@ export default function Poster({
   poster_path,
   popularity,
   vote_average,
+  typeOfData,
   type
 }: StateT & extra) {
 
@@ -33,10 +34,11 @@ export default function Poster({
     status,
     poster_path,
     popularity,
-    vote_average
+    vote_average,
+    typeOfData
   }
 
-  let url = appState === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}` :
+  let url = typeOfData === 'movie' ? `https://image.tmdb.org/t/p/w300${poster_path}` :
     poster_path;
 
   return (
@@ -79,7 +81,8 @@ export default function Poster({
             status,
             poster_path,
             popularity,
-            vote_average
+            vote_average,
+            typeOfData : appState
           },
           watched: false,
           id: id

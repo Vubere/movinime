@@ -10,12 +10,11 @@
   width: 100vw;
 }
 
-
 @keyframes heightWatchList {
-  0%{
+  0% {
     height: 0;
   }
-  100%{
+  100% {
     height: calc(100vh - 33px);
   }
 }
@@ -29,57 +28,76 @@
   display: flex;
   flex-direction: column;
   z-index: 4000;
+  padding-top: 33px;
   position: fixed;
   top: 33px;
-  .empty{
+  .empty {
     width: 100vw;
     @include otherFonts;
     position: absolute;
     top: 30%;
     right: -40%;
   }
+  .watched {
+    background-color: #54a35455;
+  }
   .listItemContainer {
     display: flex;
     flex-direction: column;
-    .completion{
+    margin: 2px;
+    position: relative;
+    .watchedPopup{
+      position: absolute;
+      color:red;
+      z-index: 5;
+      top: 40%;
+      left: 40%;
+      font-size: 2em;
+      transform: translate(-50%,-50%);
+      background-color: #222222ee;
+      transform: rotate(-30deg);
+      border: 4px solid red;
+      padding: 6px;
+    }
+    .completion {
       display: flex;
       border-bottom: 1px solid #333333ee;
       flex-direction: row;
       justify-content: space-around;
-      .remove{
+      .remove {
         cursor: pointer;
       }
-      .complete{
+      .complete {
         cursor: pointer;
       }
     }
-    .watchListMovieDetails{
+    .watchListMovieDetails {
       display: grid;
       grid-template-columns: 120px calc(100% - 120px);
+      margin: 4px;
       padding: 5px;
-      .img{
-        img{
+      position: relative;
+      .img {
+        img {
           width: 120px;
         }
       }
-      .movieDetails{
+      .movieDetails {
         padding: 8px;
         overflow: auto;
         color: white;
         max-height: 30vh;
-        ul{
-          li.title{
+        ul {
+          li.title {
             @include titleFont;
             font-size: 1.5em;
           }
-          li{
+          li {
             list-style-type: none;
             @include descriptionFont;
           }
         }
       }
-
     }
-    
   }
 }
