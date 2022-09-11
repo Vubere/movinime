@@ -23,7 +23,6 @@ body {
   height: 100vh;
   width: 100vw;
   flex-direction: column;
-  overflow-y: auto;
   overflow-x: hidden;
 }
 @keyframes jumbomotion {
@@ -68,6 +67,7 @@ body {
 }
 main {
   height: 80%;
+  overflow: hidden;
   .jumbotron {
     padding: 5px;
     width: 100vw;
