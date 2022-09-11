@@ -1,10 +1,11 @@
 import { StateT } from "../../../app/Type"
-import { useRef, useState, useEffect, memo } from "react"
+import { useRef, useState, useEffect, memo, lazy } from "react"
 import { useAppSelector, useAppDispatch } from "../../../app/hooks"
 import { fetchSimilarMovie } from "./apiSlice/movieslice"
-import Poster from "./Poster"
 import { similarPage } from "./popupPageSlice"
 
+
+const Poster = lazy(() => import("./Poster"))
 
 function SimilarMoviesPages({ title, movieId }: { title: string, movieId: number}) {
   const dispatch = useAppDispatch()
@@ -40,7 +41,13 @@ function SimilarMoviesPages({ title, movieId }: { title: string, movieId: number
         dispatch(similarPage(false))
       }}>x</div>
       <div className="movies">
-        {arr.map((data:StateT) => (<Poster key={data.id} type='simMov' {...data} />))}
+        {arr.map((data:StateT) => {
+          let details = {
+            ...data,
+            typeOfData: "movie" as "movie"
+          }
+          return (<Poster key={data.id} type='simMov' {...details} />)
+          })}
       </div>
     </div >
   )

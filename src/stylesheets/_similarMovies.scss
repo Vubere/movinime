@@ -25,11 +25,10 @@
   padding: 20px;
   .movies {
     display: grid;
-    gap: 5px;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 24% 24% 24% 24%;
+    
     .poster {
-      width: 80%;
-      height: 100%;
+      width: 150px;
       margin: 5px;
       border: none;
       border-radius: 10px;
@@ -38,7 +37,7 @@
       backdrop-filter: blur;
       box-shadow: -1px -2px #ffffff77, 3px 4px #000000;
       img {
-        width: 100%;
+        width: 150px;
         border-radius: 10px;
         height: auto;
       }
